@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-01T02:33:20.325Z",
+  "fetchedAt": "2026-08-01T02:42:03.890Z",
   "profile": {
     "name": "Godfred Eduful",
     "login": "geduful",
@@ -11,6 +11,15 @@
     "htmlUrl": "https://github.com/geduful"
   },
   "repos": [
+    {
+      "name": "godfred-eduful-portfolio",
+      "description": null,
+      "htmlUrl": "https://github.com/geduful/godfred-eduful-portfolio",
+      "homepage": null,
+      "language": "TypeScript",
+      "topics": [],
+      "pushedAt": "2026-08-01T02:40:18Z"
+    },
     {
       "name": "geduful",
       "description": null,
@@ -60,22 +69,22 @@
   "repoLanguages": [
     {
       "language": "HTML",
-      "percent": 57
+      "percent": 52
     },
     {
       "language": "TypeScript",
-      "percent": 38
+      "percent": 42
     },
     {
       "language": "JavaScript",
       "percent": 4
     },
     {
-      "language": "PLpgSQL",
+      "language": "CSS",
       "percent": 1
     },
     {
-      "language": "CSS",
+      "language": "PLpgSQL",
       "percent": 1
     }
   ]
