@@ -76,6 +76,8 @@ The site automatically pulls your **public GitHub data** (name, avatar, bio, loc
 
 **Refresh anytime:** `npm run sync` (HMR picks it up while the dev server is running).
 
+**Live overlay (no rebuild needed):** on every page load the site also fetches the GitHub profile directly in the browser (`fetchLiveProfile` in `src/lib/github.ts`) so the hero portrait and "open to opportunities" status update automatically minutes after you change them on GitHub — nothing to commit or deploy. The response is cached in `localStorage` for 15 minutes to stay inside GitHub's anonymous rate limit; the committed snapshot remains the instant and offline fallback.
+
 Notes:
 
 - If the API is unreachable, the previous snapshot is kept; with no snapshot, the site falls back to curated data — builds never fail offline.

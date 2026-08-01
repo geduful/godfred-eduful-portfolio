@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { profile, socials } from "../../data/profile";
+import { useLiveProfile } from "../../hooks/useLiveProfile";
 import { ButtonLink } from "../ui/ButtonLink";
 import { Reveal } from "../ui/Reveal";
 import { Terminal } from "../ui/Terminal";
@@ -13,6 +14,12 @@ const iconByLabel: Record<string, typeof GithubIcon> = {
 };
 
 export function Hero() {
+  const live = useLiveProfile();
+  const avatar = live?.avatarUrl
+    ? `${live.avatarUrl}${live.avatarUrl.includes("?") ? "&" : "?"}s=512`
+    : profile.avatar;
+  const hireable = live?.hireable ?? profile.hireable;
+
   return (
     <section id="home" className="relative overflow-hidden">
       <div
@@ -28,7 +35,7 @@ export function Hero() {
         <div className="grid items-center gap-14 lg:grid-cols-[1fr_1fr] lg:gap-12">
           <div className="order-2 text-center lg:order-1 lg:text-left">
             <Reveal>
-              {profile.hireable ? (
+              {hireable ? (
                 <p className="inline-flex items-center gap-2.5 rounded-full border border-base-700 bg-base-900/80 px-4 py-1.5 text-sm text-ink-300">
                   <span className="relative flex size-2" aria-hidden="true">
                     <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent-400 opacity-60" />
@@ -116,7 +123,7 @@ export function Hero() {
                   className="absolute -bottom-3 -right-3 h-full w-full rounded-[1.75rem] border border-accent-400/30"
                 />
                 <img
-                  src={profile.avatar}
+                  src={avatar}
                   alt={`Portrait of ${profile.name}, full-stack developer and graphic designer`}
                   width={192}
                   height={192}

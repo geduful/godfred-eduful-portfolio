@@ -4,8 +4,10 @@
 
 /* ==========================================================================
    DESIGN TOKENS — theme direction lives here.
-   Edit this @theme block to change the entire visual identity
-   (colors, fonts, accent) without touching any component.
+   Semantic colors alias runtime variables (--ge-*) so the viewer theme
+   toggle can switch every utility — including opacity-modified ones like
+   bg-base-900/60 — at runtime. Dark values are the defaults in :root;
+   the light palette lives in html[data-theme="light"] below.
    ========================================================================== */
 @theme {
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system,
@@ -14,25 +16,25 @@
     system-ui, sans-serif;
 
   /* Surfaces (near-black scale) */
-  --color-base-950: #07070a;
-  --color-base-900: #0c0c10;
-  --color-base-850: #111116;
-  --color-base-800: #17171d;
-  --color-base-700: #21212a;
-  --color-base-600: #2e2e39;
+  --color-base-950: var(--ge-base-950);
+  --color-base-900: var(--ge-base-900);
+  --color-base-850: var(--ge-base-850);
+  --color-base-800: var(--ge-base-800);
+  --color-base-700: var(--ge-base-700);
+  --color-base-600: var(--ge-base-600);
 
   /* Text (ink scale) */
-  --color-ink-100: #f4f4f5;
-  --color-ink-200: #e4e4e7;
-  --color-ink-300: #d4d4d8;
-  --color-ink-400: #a1a1aa;
-  --color-ink-500: #71717a;
+  --color-ink-100: var(--ge-ink-100);
+  --color-ink-200: var(--ge-ink-200);
+  --color-ink-300: var(--ge-ink-300);
+  --color-ink-400: var(--ge-ink-400);
+  --color-ink-500: var(--ge-ink-500);
 
   /* Accent */
-  --color-accent-300: #6ee7b7;
-  --color-accent-400: #34d399;
-  --color-accent-500: #10b981;
-  --color-accent-600: #059669;
+  --color-accent-300: var(--ge-accent-300);
+  --color-accent-400: var(--ge-accent-400);
+  --color-accent-500: var(--ge-accent-500);
+  --color-accent-600: var(--ge-accent-600);
 
   /* Animations */
   --animate-marquee: marquee 32s linear infinite;
@@ -44,6 +46,45 @@
   }
 }
 
+/* Default theme — dark */
+:root {
+  --ge-base-950: #07070a;
+  --ge-base-900: #0c0c10;
+  --ge-base-850: #111116;
+  --ge-base-800: #17171d;
+  --ge-base-700: #21212a;
+  --ge-base-600: #2e2e39;
+  --ge-ink-100: #f4f4f5;
+  --ge-ink-200: #e4e4e7;
+  --ge-ink-300: #d4d4d8;
+  --ge-ink-400: #a1a1aa;
+  --ge-ink-500: #71717a;
+  --ge-accent-300: #6ee7b7;
+  --ge-accent-400: #34d399;
+  --ge-accent-500: #10b981;
+  --ge-accent-600: #059669;
+}
+
+/* Light theme — viewers can toggle with the Navbar button.
+   Overrides the runtime variables without touching any component. */
+html[data-theme="light"] {
+  --ge-base-950: #f7f8fa;
+  --ge-base-900: #ffffff;
+  --ge-base-850: #eef0f3;
+  --ge-base-800: #e2e5ea;
+  --ge-base-700: #cfd3d9;
+  --ge-base-600: #aab0ba;
+  --ge-ink-100: #0b0c0f;
+  --ge-ink-200: #24272d;
+  --ge-ink-300: #3d414a;
+  --ge-ink-400: #565b66;
+  --ge-ink-500: #6f7580;
+  --ge-accent-300: #047857;
+  --ge-accent-400: #059669;
+  --ge-accent-500: #047857;
+  --ge-accent-600: #065f46;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -52,26 +93,6 @@
 
   body {
     @apply bg-base-950 font-sans text-ink-100 antialiased;
-  }
-
-  /* Light theme — viewers can toggle with the Navbar button.
-     Overrides the dark tokens in @theme without touching components. */
-  [data-theme="light"] {
-    --color-base-950: #f7f8fa;
-    --color-base-900: #ffffff;
-    --color-base-850: #eef0f3;
-    --color-base-800: #e2e5ea;
-    --color-base-700: #cfd3d9;
-    --color-base-600: #aab0ba;
-    --color-ink-100: #0b0c0f;
-    --color-ink-200: #24272d;
-    --color-ink-300: #3d414a;
-    --color-ink-400: #565b66;
-    --color-ink-500: #6f7580;
-    --color-accent-300: #047857;
-    --color-accent-400: #059669;
-    --color-accent-500: #047857;
-    --color-accent-600: #065f46;
   }
 
   ::selection {

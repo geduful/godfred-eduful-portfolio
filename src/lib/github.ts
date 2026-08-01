@@ -51,3 +51,72 @@ export const github = {
     return this.repos.find((repo) => repo.name === name);
   },
 };
+
+export type LiveProfile = {
+  name: string | null;
+  avatarUrl: string | null;
+  hireable: boolean | null;
+  location: string | null;
+};
+
+const LIVE_CACHE_KEY = "github-live-profile";
+const LIVE_CACHE_TTL_MS = 15 * 60 * 1000;
+
+function readLiveCache(): LiveProfile | null {
+  try {
+    const item = window.localStorage.getItem(LIVE_CACHE_KEY);
+    if (!item) return null;
+    const parsed = JSON.parse(item) as { fetchedAt: number; data: LiveProfile };
+    if (Date.now() - parsed.fetchedAt > LIVE_CACHE_TTL_MS) return null;
+    return parsed.data;
+  } catch {
+    return null;
+  }
+}
+
+function writeLiveCache(profile: LiveProfile) {
+  try {
+    window.localStorage.setItem(
+      LIVE_CACHE_KEY,
+      JSON.stringify({ fetchedAt: Date.now(), data: profile }),
+    );
+  } catch {
+    // storage unavailable — skip caching, fetch again next visit
+  }
+}
+
+/**
+ * Fetches the live GitHub profile in the browser so the portrait and
+ * availability status update on their own when GitHub data changes —
+ * no rebuild or deploy required. The GitHub REST API is CORS-open for
+ * public data. Responses are cached in localStorage for a short TTL to
+ * stay comfortably inside the anonymous rate limit (60 requests/hour/IP).
+ * Falls back to the last cached response (or null) if the API is unreachable.
+ */
+export async function fetchLiveProfile(): Promise<LiveProfile | null> {
+  const cached = readLiveCache();
+  const login = data.profile?.login ?? "geduful";
+  try {
+    const res = await fetch(`https://api.github.com/users/${login}`, {
+      headers: { Accept: "application/vnd.github+json" },
+      cache: "no-store",
+    });
+    if (!res.ok) return cached;
+    const json = (await res.json()) as {
+      name?: string | null;
+      avatar_url?: string | null;
+      hireable?: boolean | null;
+      location?: string | null;
+    };
+    const live: LiveProfile = {
+      name: json.name ?? null,
+      avatarUrl: json.avatar_url ?? null,
+      hireable: json.hireable ?? null,
+      location: json.location ?? null,
+    };
+    writeLiveCache(live);
+    return live;
+  } catch {
+    return cached;
+  }
+}
