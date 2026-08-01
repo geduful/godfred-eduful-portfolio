@@ -3,7 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>html { background-color: #07070a; }</style>
+    <style>
+      html { background-color: #07070a; }
+      html[data-theme="light"] { background-color: #f7f8fa; }
+    </style>
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem("theme");
+          if (theme !== "light" && theme !== "dark") {
+            theme = window.matchMedia("(prefers-color-scheme: light)").matches
+              ? "light"
+              : "dark";
+          }
+          document.documentElement.dataset.theme = theme;
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) {
+            meta.setAttribute(
+              "content",
+              theme === "light" ? "#f7f8fa" : "#07070a",
+            );
+          }
+        } catch (e) {}
+      })();
+    </script>
 
     <!-- Primary identity -->
     <title>Godfred Eduful | Full-Stack Developer, Computer Science Student &amp; Graphic Designer in Ghana</title>

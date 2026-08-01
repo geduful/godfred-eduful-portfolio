@@ -26,7 +26,7 @@ export function Hero() {
 
       <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-28 sm:px-6 sm:pt-36 lg:px-8">
         <div className="grid items-center gap-14 lg:grid-cols-[1fr_1fr] lg:gap-12">
-          <div className="text-center lg:text-left">
+          <div className="order-2 text-center lg:order-1 lg:text-left">
             <Reveal>
               {profile.hireable ? (
                 <p className="inline-flex items-center gap-2.5 rounded-full border border-base-700 bg-base-900/80 px-4 py-1.5 text-sm text-ink-300">
@@ -104,7 +104,7 @@ export function Hero() {
             </Reveal>
           </div>
 
-          <div className="flex flex-col items-center gap-8 lg:items-end">
+          <div className="order-1 flex flex-col items-center gap-8 lg:order-2 lg:items-end">
             <Reveal delay={150}>
               <div className="relative mx-auto w-fit">
                 <div

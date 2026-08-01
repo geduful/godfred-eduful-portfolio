@@ -54,6 +54,26 @@
     @apply bg-base-950 font-sans text-ink-100 antialiased;
   }
 
+  /* Light theme — viewers can toggle with the Navbar button.
+     Overrides the dark tokens in @theme without touching components. */
+  [data-theme="light"] {
+    --color-base-950: #f7f8fa;
+    --color-base-900: #ffffff;
+    --color-base-850: #eef0f3;
+    --color-base-800: #e2e5ea;
+    --color-base-700: #cfd3d9;
+    --color-base-600: #aab0ba;
+    --color-ink-100: #0b0c0f;
+    --color-ink-200: #24272d;
+    --color-ink-300: #3d414a;
+    --color-ink-400: #565b66;
+    --color-ink-500: #6f7580;
+    --color-accent-300: #047857;
+    --color-accent-400: #059669;
+    --color-accent-500: #047857;
+    --color-accent-600: #065f46;
+  }
+
   ::selection {
     background: color-mix(in srgb, var(--color-accent-400) 30%, transparent);
     color: var(--color-ink-100);

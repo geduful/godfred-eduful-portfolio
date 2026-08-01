@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { ButtonLink } from "../ui/ButtonLink";
+import { ThemeToggle } from "../ui/ThemeToggle";
 import { useActiveSection } from "../../hooks/useActiveSection";
 import { cn } from "../../lib/cn";
 
@@ -95,20 +96,23 @@ export function Navbar() {
           })}
         </ul>
 
-        <div className="hidden md:block">
-          <ButtonLink href="#contact">Let's Talk</ButtonLink>
-        </div>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <div className="hidden md:block">
+            <ButtonLink href="#contact">Let's Talk</ButtonLink>
+          </div>
 
-        <button
-          type="button"
-          className="inline-flex size-10 items-center justify-center rounded-lg border border-base-700 text-ink-300 transition-colors hover:bg-base-850 md:hidden"
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X className="size-5" /> : <Menu className="size-5" />}
-        </button>
+          <button
+            type="button"
+            className="inline-flex size-10 items-center justify-center rounded-lg border border-base-700 text-ink-300 transition-colors hover:bg-base-850 md:hidden"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
+        </div>
       </nav>
 
       {open ? (

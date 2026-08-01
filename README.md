@@ -60,7 +60,9 @@ All site content lives in `src/data/` — no component edits needed for text cha
 
 ## Theming
 
-The entire visual identity (colors, fonts, accent) is defined once in the `@theme` block at the top of `src/index.css`. To change the theme direction (e.g., light theme), edit only those tokens — components reference the tokens exclusively.
+The entire visual identity (colors, fonts, accent) is defined once in the `@theme` block at the top of `src/index.css` — components reference the tokens exclusively.
+
+Viewers can toggle between dark (default) and light themes via the Sun/Moon button in the Navbar. The choice is saved to `localStorage` (`theme` key) and respects the visitor's `prefers-color-scheme` on first visit. The light variant is a token-override block (`[data-theme="light"]` in `src/index.css`), and `index.html` contains a tiny pre-paint script so the correct theme is applied before first render (no flash). To change the light palette, edit only that override block.
 
 ## Live GitHub Sync
 
