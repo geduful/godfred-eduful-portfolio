@@ -1,0 +1,82 @@
+{
+  "fetchedAt": "2026-08-01T02:33:20.325Z",
+  "profile": {
+    "name": "Godfred Eduful",
+    "login": "geduful",
+    "bio": "Full-Stack Developer | BTech CS student @ Koforidua Technical University | Graphic Designer. Building modern, secure, and impactful digital solutions.",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/199124912?v=4",
+    "location": null,
+    "hireable": true,
+    "twitterUsername": "_kobby_pounds",
+    "htmlUrl": "https://github.com/geduful"
+  },
+  "repos": [
+    {
+      "name": "geduful",
+      "description": null,
+      "htmlUrl": "https://github.com/geduful/geduful",
+      "homepage": null,
+      "language": null,
+      "topics": [],
+      "pushedAt": "2026-08-01T01:33:00Z"
+    },
+    {
+      "name": "geduful.github.io",
+      "description": null,
+      "htmlUrl": "https://github.com/geduful/geduful.github.io",
+      "homepage": null,
+      "language": "HTML",
+      "topics": [],
+      "pushedAt": "2026-07-31T20:54:54Z"
+    },
+    {
+      "name": "TheFarmYard",
+      "description": null,
+      "htmlUrl": "https://github.com/geduful/TheFarmYard",
+      "homepage": null,
+      "language": "TypeScript",
+      "topics": [],
+      "pushedAt": "2026-07-07T20:52:24Z"
+    },
+    {
+      "name": "Nuellas_Klothing",
+      "description": null,
+      "htmlUrl": "https://github.com/geduful/Nuellas_Klothing",
+      "homepage": "https://nuellas-klothing.vercel.app",
+      "language": "HTML",
+      "topics": [],
+      "pushedAt": "2026-07-31T02:31:31Z"
+    },
+    {
+      "name": "HTML",
+      "description": null,
+      "htmlUrl": "https://github.com/geduful/HTML",
+      "homepage": null,
+      "language": "HTML",
+      "topics": [],
+      "pushedAt": "2026-07-15T22:36:46Z"
+    }
+  ],
+  "repoLanguages": [
+    {
+      "language": "HTML",
+      "percent": 57
+    },
+    {
+      "language": "TypeScript",
+      "percent": 38
+    },
+    {
+      "language": "JavaScript",
+      "percent": 4
+    },
+    {
+      "language": "PLpgSQL",
+      "percent": 1
+    },
+    {
+      "language": "CSS",
+      "percent": 1
+    }
+  ]
+}
