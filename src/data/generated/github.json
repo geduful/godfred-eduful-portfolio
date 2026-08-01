@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-01T02:42:03.890Z",
+  "fetchedAt": "2026-08-01T12:37:17.687Z",
   "profile": {
     "name": "Godfred Eduful",
     "login": "geduful",
@@ -12,31 +12,22 @@
   },
   "repos": [
     {
-      "name": "godfred-eduful-portfolio",
-      "description": null,
-      "htmlUrl": "https://github.com/geduful/godfred-eduful-portfolio",
-      "homepage": null,
-      "language": "TypeScript",
-      "topics": [],
-      "pushedAt": "2026-08-01T02:40:18Z"
-    },
-    {
       "name": "geduful",
       "description": null,
       "htmlUrl": "https://github.com/geduful/geduful",
       "homepage": null,
       "language": null,
       "topics": [],
-      "pushedAt": "2026-08-01T01:33:00Z"
+      "pushedAt": "2026-08-01T02:57:56Z"
     },
     {
-      "name": "geduful.github.io",
+      "name": "godfred-eduful-portfolio",
       "description": null,
-      "htmlUrl": "https://github.com/geduful/geduful.github.io",
-      "homepage": null,
-      "language": "HTML",
+      "htmlUrl": "https://github.com/geduful/godfred-eduful-portfolio",
+      "homepage": "https://godfred-eduful-portfolio.vercel.app",
+      "language": "TypeScript",
       "topics": [],
-      "pushedAt": "2026-07-31T20:54:54Z"
+      "pushedAt": "2026-08-01T02:44:23Z"
     },
     {
       "name": "TheFarmYard",

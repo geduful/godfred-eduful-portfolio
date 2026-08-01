@@ -88,7 +88,7 @@ Notes:
 - JSON-LD `Person` structured data in `index.html`
 - `public/robots.txt`, `public/sitemap.xml`
 
-Before deploying, replace the placeholder domain `https://godfrededuful.com` in `index.html` (canonical + OG), `robots.txt`, and `sitemap.xml` with the real domain.
+SEO URLs (canonical, Open Graph, robots sitemap, sitemap `<loc>`, JSON-LD) point to the live deployment at `https://godfrededuful.vercel.app`. If a custom domain is purchased and connected, update these references in `index.html`, `public/robots.txt`, `public/sitemap.xml`, and `src/data/profile.ts` (`siteUrl`).
 
 ## Contact Form
 

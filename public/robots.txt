@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://godfrededuful.com/sitemap.xml
+Sitemap: https://godfrededuful.vercel.app/sitemap.xml

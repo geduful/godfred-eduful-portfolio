@@ -16,7 +16,7 @@ const curated = {
   location: "Ghana",
   email: "edufulgodfred22@gmail.com",
   avatar: "https://avatars.githubusercontent.com/u/199124912?s=512",
-  siteUrl: "https://godfrededuful.com",
+  siteUrl: "https://godfrededuful.vercel.app",
   heroIntro:
     "I build modern, secure, and impactful digital solutions — combining software development, UI/UX thinking, and graphic design into web experiences that are functional, accessible, and visually engaging.",
   shortStatement: "Building technology. Creating impact.",

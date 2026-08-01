@@ -12,7 +12,7 @@
       content="Godfred Eduful is a full-stack developer, computer science student, and graphic designer based in Ghana, building modern, secure, and impactful digital solutions — from web applications to business websites."
     />
     <meta name="author" content="Godfred Eduful" />
-    <link rel="canonical" href="https://godfrededuful.com/" />
+    <link rel="canonical" href="https://godfrededuful.vercel.app/" />
     <meta name="theme-color" content="#07070a" />
 
     <!-- Favicon -->
@@ -26,7 +26,7 @@
       property="og:description"
       content="Full-stack developer, computer science student, and graphic designer based in Ghana. Building modern, secure, and impactful digital solutions."
     />
-    <meta property="og:url" content="https://godfrededuful.com/" />
+    <meta property="og:url" content="https://godfrededuful.vercel.app/" />
     <meta property="og:image" content="https://avatars.githubusercontent.com/u/199124912?s=512" />
     <meta property="og:locale" content="en_US" />
 
@@ -48,28 +48,49 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Godfred Eduful",
-        "url": "https://godfrededuful.com",
-        "image": "https://avatars.githubusercontent.com/u/199124912?s=512",
-        "jobTitle": "Full-Stack Developer & Graphic Designer",
-        "description": "Full-stack developer, computer science student, and graphic designer based in Ghana, building modern, secure, and impactful digital solutions.",
-        "email": "mailto:edufulgodfred22@gmail.com",
-        "sameAs": [
-          "https://github.com/geduful",
-          "https://www.linkedin.com/in/godfred-eduful-743b2b350",
-          "https://x.com/_kobby_pounds",
-          "https://www.instagram.com/_kobby_pounds/"
-        ],
-        "knowsAbout": [
-          "Full-Stack Development",
-          "Web Development",
-          "React",
-          "Next.js",
-          "TypeScript",
-          "Tailwind CSS",
-          "UI/UX Design",
-          "Graphic Design"
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://godfrededuful.vercel.app/#person",
+            "name": "Godfred Eduful",
+            "url": "https://godfrededuful.vercel.app/",
+            "image": "https://avatars.githubusercontent.com/u/199124912?s=512",
+            "jobTitle": "Full-Stack Developer & Graphic Designer",
+            "description": "Full-stack developer, computer science student, and graphic designer based in Ghana, building modern, secure, and impactful digital solutions.",
+            "email": "mailto:edufulgodfred22@gmail.com",
+            "alumniOf": {
+              "@type": "CollegeOrUniversity",
+              "name": "Koforidua Technical University"
+            },
+            "sameAs": [
+              "https://github.com/geduful",
+              "https://www.linkedin.com/in/godfred-eduful-743b2b350",
+              "https://x.com/_kobby_pounds",
+              "https://www.instagram.com/_kobby_pounds/"
+            ],
+            "knowsAbout": [
+              "Full-Stack Development",
+              "Web Development",
+              "React",
+              "Next.js",
+              "TypeScript",
+              "Tailwind CSS",
+              "UI/UX Design",
+              "Graphic Design"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "name": "Godfred Eduful",
+            "url": "https://godfrededuful.vercel.app/"
+          },
+          {
+            "@type": "ProfilePage",
+            "url": "https://godfrededuful.vercel.app/",
+            "mainEntity": {
+              "@id": "https://godfrededuful.vercel.app/#person"
+            }
+          }
         ]
       }
     </script>
