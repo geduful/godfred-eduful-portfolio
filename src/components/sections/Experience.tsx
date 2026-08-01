@@ -33,7 +33,7 @@ const entries = [
   {
     title: "BTech Computer Science — Koforidua Technical University",
     role: "Student",
-    period: "2026 — 2029",
+    period: "2026 — Present",
     badge: "Education",
     description:
       "Pursuing a Bachelor of Technology in Computer Science — focused on software development, web technologies, and building practical, real-world solutions.",
@@ -41,7 +41,7 @@ const entries = [
   {
     title: "Course Representative — BTech Computer Science",
     role: "Leadership",
-    period: "2026 — 2029",
+    period: "2026 — Present",
     badge: "Leadership",
     description:
       "Representing my course to the department — relaying student feedback, communicating announcements, and supporting my cohort throughout their studies.",
