@@ -96,13 +96,20 @@ SEO URLs (canonical, Open Graph, robots sitemap, sitemap `<loc>`, JSON-LD) point
 
 ## Contact Form
 
-The contact form is intentionally **frontend-only**: it validates input and shows a status message, but does not pretend to send mail. To go live:
+The contact form posts to the Vercel serverless function at `/api/contact` (`api/contact.mjs`), which forwards the message to **Resend**, delivered straight to `edufulgodfred22@gmail.com`.
 
-1. Pick a service (Formspree, EmailJS, Resend, or your own API).
-2. Copy `.env.example` to `.env` and set `VITE_CONTACT_ENDPOINT`.
-3. POST the form data from `handleSubmit` in `src/components/sections/Contact.tsx`.
+**One-time setup:**
 
-Never put private keys in the frontend — `VITE_*` variables are exposed to the browser by design.
+1. Create a free account at [resend.com](https://resend.com) and grab an API key (Settings → API Keys).
+2. Add it to Vercel: **Settings → Environment Variables → `RESEND_API_KEY`** (production), then redeploy.
+3. Done — the form will send. The free shared sender `onboarding@resend.dev` works immediately because it only delivers to the account owner's email (yours). To use a branded sender, verify your domain in Resend and update the `from` in `api/contact.mjs`.
+
+Notes:
+
+- The key never reaches the browser — it lives only in the serverless function.
+- Basic spam protection is built in: a hidden honeypot field (`website`) is rejected server-side.
+- Optional override: set `VITE_CONTACT_ENDPOINT` if you want the form to POST somewhere else instead of `/api/contact`.
+- No secrets in `.env` are ever committed (see `.env.example`).
 
 ## Accessibility & Performance
 

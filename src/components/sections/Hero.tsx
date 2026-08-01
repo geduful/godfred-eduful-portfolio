@@ -116,7 +116,7 @@ export function Hero() {
               <div className="relative mx-auto w-fit">
                 <div
                   aria-hidden="true"
-                  className="absolute inset-0 -z-10 rounded-[1.75rem] bg-accent-400/15 blur-3xl"
+                  className="absolute inset-0 -z-10 rounded-[1.75rem] bg-accent-soft blur-3xl"
                 />
                 <div
                   aria-hidden="true"

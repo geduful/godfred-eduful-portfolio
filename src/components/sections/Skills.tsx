@@ -20,7 +20,7 @@ export function Skills() {
                 <h3 className="flex items-center gap-2.5 text-sm font-semibold uppercase tracking-wider text-ink-300">
                   <span
                     aria-hidden="true"
-                    className="grid size-8 place-items-center rounded-md border border-accent-400/20 bg-accent-400/10 text-accent-400"
+                    className="grid size-8 place-items-center rounded-md border border-accent-400/20 bg-accent-soft text-accent-400"
                   >
                     <category.icon className="size-4" />
                   </span>

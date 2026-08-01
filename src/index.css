@@ -36,6 +36,11 @@
   --color-accent-500: var(--ge-accent-500);
   --color-accent-600: var(--ge-accent-600);
 
+  /* Soft accent tint (alpha hex — supported on all browsers, unlike
+     color-mix). Use for tinted accent backgrounds behind accent text,
+     e.g. bg-accent-soft instead of bg-accent-400/10. */
+  --color-accent-soft: var(--ge-accent-soft);
+
   /* Animations */
   --animate-marquee: marquee 32s linear infinite;
 
@@ -63,6 +68,7 @@
   --ge-accent-400: #34d399;
   --ge-accent-500: #10b981;
   --ge-accent-600: #059669;
+  --ge-accent-soft: #34d3991a;
 }
 
 /* Light theme — viewers can toggle with the Navbar button.
@@ -83,6 +89,7 @@ html[data-theme="light"] {
   --ge-accent-400: #059669;
   --ge-accent-500: #047857;
   --ge-accent-600: #065f46;
+  --ge-accent-soft: #0596691a;
 }
 
 @layer base {

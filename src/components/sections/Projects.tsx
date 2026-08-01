@@ -13,7 +13,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <div className="flex items-start justify-between gap-4">
           <span
             aria-hidden="true"
-            className="grid size-12 shrink-0 place-items-center rounded-xl border border-accent-400/25 bg-accent-400/10 font-display text-lg font-bold text-accent-400"
+            className="grid size-12 shrink-0 place-items-center rounded-xl border border-accent-400/25 bg-accent-soft font-display text-lg font-bold text-accent-400"
           >
             {project.name.charAt(0)}
           </span>

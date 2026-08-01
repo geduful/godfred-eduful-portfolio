@@ -64,7 +64,7 @@ export function Navbar() {
         >
           <span
             aria-hidden="true"
-            className="grid size-9 place-items-center rounded-lg border border-accent-400/30 bg-accent-400/10 font-display text-sm font-bold text-accent-400"
+            className="grid size-9 place-items-center rounded-lg border border-accent-400/30 bg-accent-soft font-display text-sm font-bold text-accent-400"
           >
             GE
           </span>

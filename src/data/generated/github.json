@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-01T13:44:40.976Z",
+  "fetchedAt": "2026-08-01T13:55:48.417Z",
   "profile": {
     "name": "Godfred Eduful",
     "login": "geduful",
@@ -18,7 +18,7 @@
       "homepage": "https://godfred-eduful-portfolio.vercel.app",
       "language": "TypeScript",
       "topics": [],
-      "pushedAt": "2026-08-01T13:39:35Z"
+      "pushedAt": "2026-08-01T13:46:25Z"
     },
     {
       "name": "geduful",
@@ -59,20 +59,20 @@
   ],
   "repoLanguages": [
     {
-      "language": "HTML",
-      "percent": 52
+      "language": "TypeScript",
+      "percent": 70
     },
     {
-      "language": "TypeScript",
-      "percent": 42
+      "language": "HTML",
+      "percent": 21
     },
     {
       "language": "JavaScript",
-      "percent": 4
+      "percent": 6
     },
     {
       "language": "CSS",
-      "percent": 1
+      "percent": 2
     },
     {
       "language": "PLpgSQL",

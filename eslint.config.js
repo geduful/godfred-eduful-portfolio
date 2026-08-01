@@ -11,7 +11,7 @@ export default defineConfig([
   ...tseslint.configs.recommended,
   reactHooks.configs.flat.recommended,
   {
-    files: ["scripts/**/*.mjs"],
+    files: ["scripts/**/*.mjs", "api/**/*.mjs"],
     languageOptions: {
       ecmaVersion: 2022,
       globals: globals.node,

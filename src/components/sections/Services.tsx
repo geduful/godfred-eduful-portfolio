@@ -20,7 +20,7 @@ export function Services() {
                 <div className="group h-full rounded-xl border border-base-800 bg-base-900/60 p-6 transition-colors duration-300 hover:border-accent-400/40">
                   <span
                     aria-hidden="true"
-                    className="grid size-10 place-items-center rounded-lg border border-accent-400/20 bg-accent-400/10 text-accent-400 transition-transform duration-300 group-hover:scale-105"
+                    className="grid size-10 place-items-center rounded-lg border border-accent-400/20 bg-accent-soft text-accent-400 transition-transform duration-300 group-hover:scale-105"
                   >
                     <service.icon className="size-5" />
                   </span>

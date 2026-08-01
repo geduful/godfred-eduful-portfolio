@@ -12,19 +12,49 @@ const iconByLabel: Record<string, typeof GithubIcon> = {
   "Instagram": InstagramIcon,
 };
 
-type Status = "idle" | "sent";
+type Status = "idle" | "sending" | "sent" | "error";
 
 export function Contact() {
   const [status, setStatus] = useState<Status>("idle");
+  const [error, setError] = useState("");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setStatus("sending");
+    setError("");
 
-    // TODO: Connect a production email service. Recommended options:
-    //  - Formspree / EmailJS (no backend needed)
-    //  - Resend / SendGrid / your own API (set VITE_CONTACT_ENDPOINT in .env
-    //    and POST the form data there from this handler)
-    setStatus("sent");
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const payload = {
+      name: String(formData.get("name") ?? ""),
+      email: String(formData.get("email") ?? ""),
+      message: String(formData.get("message") ?? ""),
+      website: String(formData.get("website") ?? ""),
+    };
+
+    const endpoint = import.meta.env.VITE_CONTACT_ENDPOINT ?? "/api/contact";
+
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        error?: string;
+      };
+      if (!res.ok || !data.ok) {
+        setStatus("error");
+        setError(data.error ?? "The message could not be sent. Please try again.");
+        return;
+      }
+      setStatus("sent");
+      form.reset();
+    } catch {
+      setStatus("error");
+      setError("Could not reach the server right now. Please try again or email me directly.");
+    }
   }
 
   return (
@@ -49,7 +79,7 @@ export function Contact() {
                 >
                   <span
                     aria-hidden="true"
-                    className="grid size-10 shrink-0 place-items-center rounded-lg border border-accent-400/20 bg-accent-400/10 text-accent-400"
+                      className="grid size-10 shrink-0 place-items-center rounded-lg border border-accent-400/20 bg-accent-soft text-accent-400"
                   >
                     <Mail className="size-5" />
                   </span>
@@ -104,6 +134,16 @@ export function Contact() {
                 Send a message
               </h3>
               <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+                <div className="hidden" aria-hidden="true">
+                  <label htmlFor="contact-website">Website</label>
+                  <input
+                    id="contact-website"
+                    name="website"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
                 <div>
                   <label
                     htmlFor="contact-name"
@@ -157,9 +197,10 @@ export function Contact() {
 
                 <button
                   type="submit"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-accent-400 px-5 py-3 text-sm font-semibold text-base-950 transition-colors hover:bg-accent-300"
+                  disabled={status === "sending"}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-accent-400 px-5 py-3 text-sm font-semibold text-base-950 transition-colors hover:bg-accent-300 disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                  Send message
+                  {status === "sending" ? "Sending…" : "Send message"}
                   <Send className="size-4" aria-hidden="true" />
                 </button>
 
@@ -169,8 +210,12 @@ export function Contact() {
                 >
                   {status === "sent" ? (
                     <>
-                      Thanks for reaching out — this form isn't connected to a
-                      backend yet, so for now email me directly at{" "}
+                      Message sent — thank you! I'll get back to you as soon as
+                      I can.
+                    </>
+                  ) : status === "error" ? (
+                    <>
+                      {error} You can also email me directly at{" "}
                       <a
                         href={`mailto:${profile.email}`}
                         className="font-medium text-accent-300 underline underline-offset-2"
@@ -180,7 +225,7 @@ export function Contact() {
                       .
                     </>
                   ) : (
-                    "This form is currently frontend-only. A production email service or API endpoint can be connected later without changing the UI."
+                    "Your message is sent straight to my inbox — usually answered within a day or two."
                   )}
                 </p>
               </form>

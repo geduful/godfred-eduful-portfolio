@@ -75,7 +75,7 @@ export function About() {
                   <li key={fact.label} className="flex items-start gap-4">
                     <span
                       aria-hidden="true"
-                      className="grid size-9 shrink-0 place-items-center rounded-lg border border-accent-400/20 bg-accent-400/10 text-accent-400"
+                      className="grid size-9 shrink-0 place-items-center rounded-lg border border-accent-400/20 bg-accent-soft text-accent-400"
                     >
                       <fact.icon className="size-4.5" />
                     </span>
