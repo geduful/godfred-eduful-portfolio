@@ -54,9 +54,13 @@ All site content lives in `src/data/` — no component edits needed for text cha
 | File | Content |
 | --- | --- |
 | `profile.ts` | Name, taglines, intro, email, social links |
-| `projects.ts` | Project cards (name, description, role, tech, links) |
+| `projects.ts` | Project cards (name, description, role, tech, links) + optional `caseStudy` (Problem → What I did → Outcome) shown as an expandable "Case study" toggle on each card |
 | `skills.ts` | Skill categories and the footnote |
 | `services.ts` | Services grid |
+
+### Resume / CV
+
+The "Download CV" buttons (Hero and Contact) link to `public/resume.pdf` — replace that file with your real CV (keep the same filename). The current file is a generated placeholder.
 
 ## Theming
 

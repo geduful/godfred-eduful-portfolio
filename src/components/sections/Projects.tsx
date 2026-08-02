@@ -1,9 +1,59 @@
-import { ExternalLink } from "lucide-react";
+import { useState } from "react";
+import { ChevronDown, ExternalLink } from "lucide-react";
 import { otherRepos, projects, type Project } from "../../data/projects";
 import { GithubIcon } from "../ui/icons";
 import { Reveal } from "../ui/Reveal";
 import { SectionHeading } from "../ui/SectionHeading";
 import { SpotlightCard } from "../ui/SpotlightCard";
+import { cn } from "../../lib/cn";
+
+function CaseStudy({ study }: { study: NonNullable<Project["caseStudy"]> }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="mt-5 border-t border-base-800">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-controls={`case-study-${study.outcome.length}`}
+        className="flex w-full items-center justify-between gap-3 py-4 text-left text-sm font-semibold text-ink-200 transition-colors hover:text-accent-300"
+      >
+        Case study
+        <ChevronDown
+          className={cn(
+            "size-4 shrink-0 text-ink-400 transition-transform duration-300",
+            open && "rotate-180",
+          )}
+          aria-hidden="true"
+        />
+      </button>
+
+      {open ? (
+        <dl className="space-y-4 pb-5 text-sm leading-relaxed">
+          <div>
+            <dt className="font-semibold uppercase tracking-wider text-ink-500">
+              Problem
+            </dt>
+            <dd className="mt-1 text-ink-300">{study.problem}</dd>
+          </div>
+          <div>
+            <dt className="font-semibold uppercase tracking-wider text-ink-500">
+              What I did
+            </dt>
+            <dd className="mt-1 text-ink-300">{study.approach}</dd>
+          </div>
+          <div>
+            <dt className="font-semibold uppercase tracking-wider text-ink-500">
+              Outcome
+            </dt>
+            <dd className="mt-1 text-ink-300">{study.outcome}</dd>
+          </div>
+        </dl>
+      ) : null}
+    </div>
+  );
+}
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
@@ -69,6 +119,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             </a>
           ) : null}
         </div>
+        {project.caseStudy ? <CaseStudy study={project.caseStudy} /> : null}
       </article>
       </SpotlightCard>
     </Reveal>

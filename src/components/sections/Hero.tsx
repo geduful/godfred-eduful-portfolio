@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
 import { profile, socials } from "../../data/profile";
 import { useLiveProfile } from "../../hooks/useLiveProfile";
 import { ButtonLink } from "../ui/ButtonLink";
@@ -85,6 +85,15 @@ export function Hero() {
                   className="w-full sm:w-auto"
                 >
                   Let's Connect
+                </ButtonLink>
+                <ButtonLink
+                  href="resume.pdf"
+                  variant="secondary"
+                  download
+                  className="w-full sm:w-auto"
+                >
+                  <Download className="size-4" aria-hidden="true" />
+                  Download CV
                 </ButtonLink>
               </div>
             </Reveal>

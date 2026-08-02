@@ -7,6 +7,7 @@ type ButtonLinkProps = {
   variant?: "primary" | "secondary";
   className?: string;
   external?: boolean;
+  download?: boolean | string;
 };
 
 export function ButtonLink({
@@ -15,6 +16,7 @@ export function ButtonLink({
   variant = "primary",
   className,
   external = false,
+  download,
 }: ButtonLinkProps) {
   return (
     <a
@@ -27,6 +29,7 @@ export function ButtonLink({
         className,
       )}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      {...(download !== undefined ? { download } : {})}
     >
       {children}
     </a>

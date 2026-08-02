@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { ExternalLink, Mail, Send } from "lucide-react";
+import { Download, ExternalLink, Mail, Send } from "lucide-react";
 import { profile, socials } from "../../data/profile";
 import { GithubIcon, InstagramIcon, LinkedinIcon, XIcon } from "../ui/icons";
 import { Reveal } from "../ui/Reveal";
@@ -126,6 +126,26 @@ export function Contact() {
                 );
               })}
             </ul>
+            <a
+              href="resume.pdf"
+              download
+              className="mt-6 flex items-center gap-4 rounded-xl border border-base-800 bg-base-900/60 px-4 py-3.5 transition-colors hover:border-base-600"
+            >
+              <span
+                aria-hidden="true"
+                className="grid size-10 shrink-0 place-items-center rounded-lg border border-accent-400/20 bg-accent-soft text-accent-400"
+              >
+                <Download className="size-5" />
+              </span>
+              <span>
+                <span className="block text-xs font-medium uppercase tracking-wider text-ink-500">
+                  Resume
+                </span>
+                <span className="block text-sm font-medium text-ink-200">
+                  Download my CV (PDF)
+                </span>
+              </span>
+            </a>
           </Reveal>
 
           <Reveal delay={150}>
