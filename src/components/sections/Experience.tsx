@@ -7,7 +7,7 @@ const entries = [
     role: "Developer Contributor",
     badge: "Contribution",
     description:
-      "Contributed to the development of the Acadex platform and its web experience — an attendance management platform built to simplify how attendance is recorded and monitored for a university community.",
+      "Contributed to the development of the Acadex platform and its web experience alongside Rosemary Boahemaa Dwamena — an attendance management platform built to simplify how attendance is recorded and monitored for a university community.",
   },
   {
     title: "TheFarmYard",

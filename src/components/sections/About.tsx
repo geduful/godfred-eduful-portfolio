@@ -40,26 +40,30 @@ export function About() {
             <div className="mt-6 space-y-5 leading-relaxed text-ink-400">
               <Reveal delay={100}>
                 <p>
-                  I'm {profile.firstName} — a computer science student and
-                  full-stack developer based in Ghana. I care about how software
-                  works <em className="not-italic text-ink-300">and</em> how it
-                  looks, which is why I pair development with UI/UX thinking and
-                  graphic design.
+                  I'm Godfred Eduful — a computer science student at
+                  Koforidua Technical University and a full-stack developer
+                  based in Ghana. I care about how software works{" "}
+                  <em className="not-italic text-ink-300">and</em> how it
+                  looks, which is why I pair development with UI/UX thinking
+                  and graphic design.
                 </p>
               </Reveal>
               <Reveal delay={200}>
                 <p>
-                  Most of my work sits at the intersection of code and design:
-                  from TheFarmYard, an agricultural platform connecting farmers
-                  directly with buyers, to modern websites for fashion and
-                  corporate brands.
+                  My work sits at the intersection of code and design: I've
+                  contributed to the development of Acadex, an attendance
+                  management platform for a university community, and built
+                  TheFarmYard, an agricultural platform connecting farmers
+                  directly with buyers — alongside modern websites for fashion
+                  and corporate brands.
                 </p>
               </Reveal>
               <Reveal delay={300}>
                 <p>
-                  My goal is straightforward — build useful technology that
-                  solves real problems, and get better at it with every project
-                  I take on.
+                  I focus on digital products, websites, and software
+                  solutions that are functional, accessible, and visually
+                  engaging — building user-focused experiences and getting
+                  better with every project I take on.
                 </p>
               </Reveal>
             </div>

@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-02T02:36:14.012Z",
+  "fetchedAt": "2026-08-02T19:28:53.250Z",
   "profile": {
     "name": "Godfred Eduful",
     "login": "geduful",
@@ -12,6 +12,15 @@
   },
   "repos": [
     {
+      "name": "godfred-eduful-portfolio",
+      "description": null,
+      "htmlUrl": "https://github.com/geduful/godfred-eduful-portfolio",
+      "homepage": "https://godfred-eduful-portfolio.vercel.app",
+      "language": "TypeScript",
+      "topics": [],
+      "pushedAt": "2026-08-02T18:53:51Z"
+    },
+    {
       "name": "HTML",
       "description": null,
       "htmlUrl": "https://github.com/geduful/HTML",
@@ -19,15 +28,6 @@
       "language": "HTML",
       "topics": [],
       "pushedAt": "2026-07-15T22:36:46Z"
-    },
-    {
-      "name": "godfred-eduful-portfolio",
-      "description": null,
-      "htmlUrl": "https://github.com/geduful/godfred-eduful-portfolio",
-      "homepage": "https://godfred-eduful-portfolio.vercel.app",
-      "language": "TypeScript",
-      "topics": [],
-      "pushedAt": "2026-08-01T14:03:15Z"
     },
     {
       "name": "geduful",
@@ -60,7 +60,7 @@
   "repoLanguages": [
     {
       "language": "HTML",
-      "percent": 52
+      "percent": 51
     },
     {
       "language": "TypeScript",

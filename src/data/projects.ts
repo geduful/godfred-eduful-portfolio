@@ -27,15 +27,15 @@ const curatedProjects: Project[] = [
     name: "Acadex",
     category: "Web Application · Contribution",
     description:
-      "An attendance management platform designed to simplify how attendance is recorded and monitored for a university community. I contributed to the development of the platform and its web experience.",
-    role: "Developer — contributed to the platform and website",
+      "An attendance management platform that simplifies how attendance is recorded and monitored for a university community. I contributed to its development alongside Rosemary Boahemaa Dwamena, focusing on the platform and its web experience.",
+    role: "Developer — contributed to the platform and web experience",
     tech: [],
     liveUrl: "https://acadex-ktu.vercel.app/",
     caseStudy: {
       problem:
         "A university community needed a simpler, more reliable way to record and monitor attendance across campus than manual registers.",
       approach:
-        "Contributed to the development of the platform and its web experience as part of the project team, focusing on how staff and students interact with the system.",
+        "Contributed to the development of the platform and its web experience as part of the project team alongside Rosemary Boahemaa Dwamena, focusing on how staff and students interact with the system.",
       outcome:
         "A live attendance management platform at acadex-ktu.vercel.app — currently used to simplify attendance recording and monitoring for its university community.",
     },
