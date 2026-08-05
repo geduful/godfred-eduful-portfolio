@@ -1,126 +1,211 @@
 # Godfred Eduful — Portfolio
 
-Personal portfolio website of **Godfred Eduful** — Full-Stack Developer, Computer Science Student & Graphic Designer based in Ghana.
+Personal portfolio of **Godfred Eduful** — Full-Stack Developer, Computer Science Student & Graphic Designer based in Ghana.
 
-Built as a fast, accessible, SEO-ready single-page application.
+A fast, accessible, SEO-ready single-page application that presents his work, skills, experience, and services — with live GitHub data, a working contact form, and structured data for Google.
+
+---
+
+## Overview
+
+**What it is.** A single-page React application that serves as the professional online presence of Godfred Eduful. It combines a personal brand, a portfolio of real projects, an evidence-based skills section, an experience timeline, a services grid, and a working contact form.
+
+**Who it is for.** Potential employers, clients, collaborators, and anyone evaluating Godfred's software development and design work.
+
+**Why it exists.** To present verified, accurate professional information — who Godfred is, what he builds, what he has contributed to, and how to reach him — in one fast, accessible, and search-engine-friendly place.
+
+---
+
+## Features
+
+- **Hero** — full name, role taglines, intro, availability status, and portrait pulled live from GitHub, plus social profile links (GitHub, LinkedIn, X, Instagram).
+- **Animated terminal card** — a decorative typewriter session summarizing identity, stack, projects, and location (reduced-motion aware).
+- **Tech marquee** — an infinite scrolling strip of technologies used as a visual divider.
+- **About** — natural-language identity summary with a quick-facts card (location, education, dual craft, focus).
+- **Skills** — evidence-based categories (languages, frontend, backend, databases, tools, deployment, design), with a footnote distinguishing confirmed skills from those declared on the public profile, plus live language statistics from public GitHub repositories.
+- **Projects** — curated cards with accurate role attribution (including contribution-based framing for collaborative work), tech tags, live-site and source links, expandable Problem → What I did → Outcome case studies, and a "More from GitHub" list of other public repositories.
+- **Experience** — a timeline covering project contributions, independent work, education, and leadership.
+- **Services** — a grid of offered services (full-stack development, frontend, business websites, web applications, UI/UX & graphic design, AI & automation).
+- **Contact form** — validates input, rejects bots via a hidden honeypot, and sends messages through a Vercel serverless function to Resend; direct email and social links are also provided.
+- **Dark/light themes** — theme toggle persisted in `localStorage`, honoring `prefers-color-scheme` on first visit with a pre-paint script to avoid flash.
+- **Live GitHub sync** — a build-time snapshot (`npm run sync`) plus a client-side live profile fetch (15-minute cache) so the portrait and availability status stay current without redeploys.
+- **SEO & structured data** — canonical URL, Open Graph and Twitter cards, JSON-LD `Person`/`WebSite`/`ProfilePage` graph, `robots.txt`, `sitemap.xml`.
+- **Accessibility** — skip link, semantic landmarks, labeled form fields, visible focus states, `prefers-reduced-motion` support.
+- **Downloadable CV** — a resume PDF linked from the Hero and Contact sections.
+
+---
 
 ## Tech Stack
 
-- [React 19](https://react.dev) + [TypeScript](https://www.typescriptlang.org) (strict)
-- [Vite](https://vite.dev) — build tool
-- [Tailwind CSS v4](https://tailwindcss.com) — styling (design tokens in `src/index.css`)
-- [Lucide React](https://lucide.dev) — icons
-- Self-hosted variable fonts (Inter, Space Grotesk) via `@fontsource-variable`
+| Layer | Technology |
+| --- | --- |
+| Languages | TypeScript, HTML, CSS (JavaScript for config/scripts) |
+| Framework | React 19 |
+| Styling | Tailwind CSS v4 (design tokens in `src/index.css`) |
+| Icons | lucide-react (brand icons as inline SVGs) |
+| Fonts | Self-hosted variable fonts — Inter & Space Grotesk (`@fontsource-variable`) |
+| Build tools | Vite 8, TypeScript 6 (strict), ESLint 10 (flat config) |
+| Data | Local curated data in `src/data`, overlaid with a GitHub REST API snapshot |
+| Backend | Single Vercel serverless function (`api/contact.mjs`) → Resend email API |
+| Deployment | Vercel (static site + serverless function) |
 
-## Getting Started
+Requirements: Node.js >= 20.19 (per `package.json` engines).
 
-Requirements: Node.js >= 20.19
+---
+
+## Architecture
+
+A static single-page application built with Vite and React, with exactly one serverless function for the contact form.
+
+- **Content lives in `src/data/`.** Curated copy (name, taglines, projects, skills, services) is written by hand. A generated snapshot (`src/data/generated/github.json`) overlays live GitHub data — profile fields, repository links, and language statistics — and a short-lived client-side fetch keeps the portrait and availability status fresh.
+- **Theming is token-driven.** All colors and fonts are defined once in Tailwind's `@theme` block as CSS custom properties, so the dark/light toggle swaps variables at runtime without touching components.
+- **SEO head is fully static** in `index.html`: metadata, canonical, Open Graph, Twitter cards, and a JSON-LD `@graph` (Person, WebSite, ProfilePage).
+- **The contact flow is client → serverless → Resend.** The browser posts to `/api/contact`; the function validates, strips origin/spam, and forwards the email. The API key never reaches the browser.
+
+---
+
+## Folder Structure
+
+```
+godfred-eduful-portfolio/
+├── api/
+│   └── contact.mjs              # Vercel serverless function — contact form → Resend
+├── public/                      # served as-is at the site root
+│   ├── favicon.svg
+│   ├── robots.txt
+│   ├── sitemap.xml
+│   ├── resume.pdf               # downloadable CV (PDF)
+│   └── google4edc661d86cfd4c5.html  # Google Search Console verification file
+├── scripts/
+│   └── sync-github.mjs          # fetches public GitHub data → src/data/generated/github.json
+├── src/
+│   ├── components/
+│   │   ├── layout/              # Navbar (scroll-spy, mobile menu), Footer (live Accra time)
+│   │   ├── sections/            # Hero, About, Skills, Projects, Experience, Services, Contact
+│   │   └── ui/                  # Reveal, SpotlightCard, Terminal, TechMarquee, SectionHeading,
+│   │                            # ButtonLink, ScrollProgress, BackToTop, ThemeToggle, icons
+│   ├── data/
+│   │   ├── profile.ts           # name, taglines, intro, email, social links
+│   │   ├── projects.ts          # curated projects + case studies + GitHub overlay
+│   │   ├── skills.ts            # evidence-based skill categories + footnote
+│   │   ├── services.ts          # services grid
+│   │   └── generated/
+│   │       └── github.json      # auto-generated GitHub snapshot (committed, refreshed by sync)
+│   ├── hooks/                   # useTheme, useReveal, useActiveSection, useLiveProfile
+│   ├── lib/
+│   │   ├── github.ts            # typed access to the GitHub snapshot + live profile fetch
+│   │   └── cn.ts                # className helper
+│   ├── App.tsx                  # page composition (section order)
+│   ├── main.tsx                 # React entry
+│   ├── index.css                # Tailwind v4 @theme tokens + dark/light palettes + base styles
+│   └── vite-env.d.ts
+├── index.html                   # SEO head, JSON-LD, theme pre-paint script, app mount
+├── vite.config.ts               # React + Tailwind plugins; base "./"
+├── tsconfig.json / tsconfig.app.json / tsconfig.node.json
+├── eslint.config.js             # flat config: JS/TS/React hooks rules
+├── package.json
+└── README.md
+```
+
+---
+
+## Installation
+
+Requirements: Node.js >= 20.19 and npm.
 
 ```bash
+# 1. Clone
+git clone https://github.com/geduful/godfred-eduful-portfolio.git
+cd godfred-eduful-portfolio
+
+# 2. Install dependencies
 npm install
-npm run dev        # start dev server at http://localhost:5173
-npm run build      # type-check + production build (dist/)
-npm run preview    # preview the production build
-npm run lint       # ESLint
+
+# 3. Start the development server (http://localhost:5173)
+npm run dev
+
+# 4. Production build — type-checks with tsc, then builds to dist/
+npm run build
+
+# 5. Preview the production build locally
+npm run preview
+
+# 6. Lint
+npm run lint
+
+# 7. Refresh the GitHub data snapshot manually
+npm run sync
 ```
 
-## Project Structure
+> `dev`, `build`, and `preview` automatically run `npm run sync` first (via `predev` / `prebuild` / `prepreview`). If the GitHub API is unreachable, the previous snapshot is kept and the build still succeeds offline.
+
+---
+
+## Environment Variables
+
+Copy `.env.example` to `.env` for local development. No real secret values are ever committed.
+
+| Variable | Scope | Required | Purpose |
+| --- | --- | --- | --- |
+| `VITE_CONTACT_ENDPOINT` | Client (Vite) | No | Overrides the contact form endpoint. Defaults to `/api/contact`. |
+| `RESEND_API_KEY` | Server only | For the contact form | Resend API key used by `api/contact.mjs`. Must never use a `VITE_` prefix (that would expose it to the browser). Set it in the Vercel dashboard: Settings → Environment Variables. |
+| `GITHUB_TOKEN` | Local / CI | No | Optional read-only GitHub token that raises the `npm run sync` API rate limit from 60 to 5,000 requests/hour. Runs only in the sync script — never bundled. |
+
+Contact-form setup: create a free account at [resend.com](https://resend.com), copy the API key, add it as `RESEND_API_KEY` in Vercel, and redeploy. The free shared sender (`onboarding@resend.dev`) delivers to the account owner's email immediately; verify a domain in Resend to use a branded sender.
+
+---
+
+## Screenshots
+
+Screenshots are not included yet. Add images of the deployed site here, for example:
 
 ```
-src/
-├── components/
-│   ├── layout/       Navbar (scroll-spy), Footer (live local time)
-│   ├── sections/     Hero (portrait + terminal), About, Skills, Projects,
-│   │                 Experience, Services, Contact
-│   └── ui/           Reveal, SectionHeading, ButtonLink, SpotlightCard,
-│                     Terminal (typewriter), TechMarquee, ScrollProgress,
-│                     BackToTop, brand icons
-├── hooks/            useReveal, useActiveSection
-├── data/             profile.ts, projects.ts, skills.ts, services.ts  ← edit content here
-├── lib/              cn (className helper)
-├── App.tsx
-├── main.tsx
-└── index.css         Tailwind v4 design tokens (@theme) + base styles
-public/
-├── favicon.svg
-├── robots.txt
-└── sitemap.xml
+docs/screenshots/home.png     # Hero + marquee
+docs/screenshots/projects.png # Projects section
+docs/screenshots/contact.png  # Contact section
 ```
 
-## Editing Content
+Then reference them with markdown images (e.g. `![Home](docs/screenshots/home.png)`).
 
-All site content lives in `src/data/` — no component edits needed for text changes:
+---
 
-| File | Content |
-| --- | --- |
-| `profile.ts` | Name, taglines, intro, email, social links |
-| `projects.ts` | Project cards (name, description, role, tech, links) + optional `caseStudy` (Problem → What I did → Outcome) shown as an expandable "Case study" toggle on each card |
-| `skills.ts` | Skill categories and the footnote |
-| `services.ts` | Services grid |
+## Live Demo
 
-### Resume / CV
+- **Portfolio:** https://godfrededuful.vercel.app/
+- **GitHub:** https://github.com/geduful
 
-The "Download CV" buttons (Hero and Contact) link to `public/resume.pdf` — replace that file with your real CV (keep the same filename). The current file is a generated placeholder.
+---
 
-## Theming
+## Performance & SEO
 
-The entire visual identity (colors, fonts, accent) is defined once in the `@theme` block at the top of `src/index.css` — components reference the tokens exclusively.
+- **Responsive design** — mobile-first Tailwind layout, responsive grids, collapsible mobile navigation.
+- **Accessibility** — skip-to-content link, semantic landmarks, labeled form fields, visible focus states, `prefers-reduced-motion` respected in CSS and hooks, decorative elements marked `aria-hidden`.
+- **Structured data** — JSON-LD `@graph` with a single `Person` entity (name, URL, image, job title, alumni, `sameAs`, `knowsAbout`), `WebSite`, and `ProfilePage` referencing the Person.
+- **Search Engine Optimization** — descriptive title and meta description, canonical URL, Open Graph and Twitter Card tags, `robots.txt`, and `sitemap.xml`, all pointing to https://godfrededuful.vercel.app/.
+- **Performance** — self-hosted variable fonts (no third-party font requests), no third-party runtime scripts, scroll-reveal via `IntersectionObserver`, a `requestAnimationFrame`-throttled scroll progress bar, direct style mutations to avoid re-renders, `preconnect` to the avatar CDN, and a small production bundle.
 
-Viewers can toggle between dark (default) and light themes via the Sun/Moon button in the Navbar. The choice is saved to `localStorage` (`theme` key) and respects the visitor's `prefers-color-scheme` on first visit. The light variant is a token-override block (`[data-theme="light"]` in `src/index.css`), and `index.html` contains a tiny pre-paint script so the correct theme is applied before first render (no flash). To change the light palette, edit only that override block.
+---
 
-## Live GitHub Sync
+## Future Improvements
 
-The site automatically pulls your **public GitHub data** (name, avatar, bio, location, hireable status, repos, live links, language stats) so updates you make on GitHub appear on the site.
+- Add a professional 1200×630 Open Graph image for social sharing.
+- Add GitHub Actions CI (lint + type-check + build on push and pull requests).
+- Add automated tests (none exist today).
+- Connect a custom domain and update the SEO URLs documented in `index.html`, `public/robots.txt`, `public/sitemap.xml`, and `src/data/profile.ts`.
+- Add the README screenshots described above.
 
-**How it works:**
+---
 
-1. `scripts/sync-github.mjs` fetches the GitHub REST API and writes `src/data/generated/github.json`
-2. Runs automatically via the `predev` / `prebuild` / `prepreview` npm hooks
-3. `src/lib/github.ts` provides typed access; `src/data/profile.ts` and `src/data/projects.ts` overlay live values over curated ones (curated copy wins where the API has nothing — e.g., project role wording, Acadex)
+## Author
 
-**Refresh anytime:** `npm run sync` (HMR picks it up while the dev server is running).
+**Godfred Eduful** — Full-Stack Developer | Computer Science Student | Graphic Designer
 
-**Live overlay (no rebuild needed):** on every page load the site also fetches the GitHub profile directly in the browser (`fetchLiveProfile` in `src/lib/github.ts`) so the hero portrait and "open to opportunities" status update automatically minutes after you change them on GitHub — nothing to commit or deploy. The response is cached in `localStorage` for 15 minutes to stay inside GitHub's anonymous rate limit; the committed snapshot remains the instant and offline fallback.
+- GitHub: https://github.com/geduful
+- LinkedIn: https://www.linkedin.com/in/godfred-eduful-743b2b350
+- Portfolio: https://godfrededuful.vercel.app/
 
-Notes:
+---
 
-- If the API is unreachable, the previous snapshot is kept; with no snapshot, the site falls back to curated data — builds never fail offline.
-- Anonymous access allows ~60 requests/hour. Set `GITHUB_TOKEN` in `.env` (read-only, no scopes; never committed) to raise it to 5,000/hour.
-- LinkedIn cannot be pulled programmatically (login wall) — social links remain curated in `src/data/profile.ts`.
-- `src/data/generated/github.json` is generated, but it is committed so fresh clones build without network. It is always regenerated on dev/build.
+## License
 
-## SEO
-
-- Semantic HTML, proper heading hierarchy
-- Title, meta description, Open Graph, Twitter Card, canonical URL
-- JSON-LD `Person` structured data in `index.html`
-- `public/robots.txt`, `public/sitemap.xml`
-
-SEO URLs (canonical, Open Graph, robots sitemap, sitemap `<loc>`, JSON-LD) point to the live deployment at `https://godfrededuful.vercel.app`. If a custom domain is purchased and connected, update these references in `index.html`, `public/robots.txt`, `public/sitemap.xml`, and `src/data/profile.ts` (`siteUrl`).
-
-## Contact Form
-
-The contact form posts to the Vercel serverless function at `/api/contact` (`api/contact.mjs`), which forwards the message to **Resend**, delivered straight to `edufulgodfred22@gmail.com`.
-
-**One-time setup:**
-
-1. Create a free account at [resend.com](https://resend.com) and grab an API key (Settings → API Keys).
-2. Add it to Vercel: **Settings → Environment Variables → `RESEND_API_KEY`** (production), then redeploy.
-3. Done — the form will send. The free shared sender `onboarding@resend.dev` works immediately because it only delivers to the account owner's email (yours). To use a branded sender, verify your domain in Resend and update the `from` in `api/contact.mjs`.
-
-Notes:
-
-- The key never reaches the browser — it lives only in the serverless function.
-- Basic spam protection is built in: a hidden honeypot field (`website`) is rejected server-side.
-- Optional override: set `VITE_CONTACT_ENDPOINT` if you want the form to POST somewhere else instead of `/api/contact`.
-- No secrets in `.env` are ever committed (see `.env.example`).
-
-## Accessibility & Performance
-
-- WCAG-minded: keyboard navigation, visible focus states, semantic landmarks, labeled form fields, meaningful alt text
-- `prefers-reduced-motion` respected (CSS + the `useReveal` hook)
-- No unnecessary third-party scripts; fonts are self-hosted; lazy-reveal via IntersectionObserver only
-
-## Deployment
-
-Static output — deploy `dist/` to Vercel, Netlify, or GitHub Pages (Vite `base` is already set to `./` for sub-path hosting).
+This repository currently has **no license file**. Until a license is chosen and added, all rights are reserved by default under copyright law. If you plan to reuse any part of this project, contact the author first.
