@@ -51,8 +51,9 @@ export function About() {
               <Reveal delay={200}>
                 <p>
                   My work sits at the intersection of code and design: I've
-                  contributed to the development of Acadex, an attendance
-                  management platform for a university community, and built
+                  contributed to the development of Acadex alongside Rosemary
+                  Boahemaa Dwamena — an attendance management platform for a
+                  university community — and built
                   TheFarmYard, an agricultural platform connecting farmers
                   directly with buyers — alongside modern websites for fashion
                   and corporate brands.

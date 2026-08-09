@@ -8,6 +8,8 @@ export type Project = {
   tech: string[];
   liveUrl?: string;
   repoUrl?: string;
+  /** Link label for the repository button — "Source" unless the repo is a contribution. */
+  repoLabel?: string;
   /** Links this curated entry to its live GitHub repo for auto-fill. */
   repoName?: string;
   /** Expandable case study — how the problem was approached and delivered. */
@@ -31,6 +33,8 @@ const curatedProjects: Project[] = [
     role: "Developer — contributed to the platform and web experience",
     tech: [],
     liveUrl: "https://acadex-ktu.vercel.app/",
+    repoUrl: "https://github.com/Rosieeee344/Acadex",
+    repoLabel: "Repository",
     caseStudy: {
       problem:
         "A university community needed a simpler, more reliable way to record and monitor attendance across campus than manual registers.",

@@ -114,7 +114,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-ink-300 transition-colors hover:text-accent-300"
             >
-              Source
+              {project.repoLabel ?? "Source"}
               <GithubIcon className="size-4" />
             </a>
           ) : null}
