@@ -52,13 +52,14 @@ const curatedProjects: Project[] = [
     role: "Developer — designed and built the platform",
     tech: ["Next.js", "TypeScript", "React", "Tailwind CSS", "Supabase", "PostgreSQL"],
     repoName: "TheFarmYard",
+    liveUrl: "https://thefarmyard.vercel.app/",
     caseStudy: {
       problem:
         "Farmers often rely on middlemen to reach buyers, which cuts into their earnings and limits their access to agricultural markets.",
       approach:
         "Designed and built a digital marketplace where farmers can present their produce and buyers can find them directly — covering product discovery and connection on one platform.",
       outcome:
-        "An end-to-end marketplace built on Next.js, TypeScript, and Supabase — open source on GitHub and ready to take to real communities.",
+        "A live agricultural marketplace at thefarmyard.vercel.app that connects farmers directly with buyers — open source on GitHub.",
     },
   },
   {
