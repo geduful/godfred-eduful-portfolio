@@ -163,12 +163,29 @@ export type ResolvedProjects = {
   otherRepos: GithubRepo[];
 };
 
+export type ResolveOptions = {
+  /**
+   * Set only when `repos` was positively confirmed fresh from the live
+   * GitHub API (HTTP 200 or 304). A curated entry whose linked repo is
+   * then absent is treated as deleted (or made private) and omitted.
+   * Never set for snapshot/cached data — absence there can't prove
+   * deletion, so cards are kept rather than risk hiding live content
+   * during an offline spell or API outage.
+   */
+  confirmedLive?: boolean;
+};
+
 /**
  * Resolves the whole projects section from any repo list — the build-time
  * snapshot for first paint, the live API list once it arrives. Curated
  * entries keep their order and case studies; new repos flow in on their own.
  */
-export function resolveProjects(repos: GithubRepo[]): ResolvedProjects {
+export function resolveProjects(
+  repos: GithubRepo[],
+  options?: ResolveOptions,
+): ResolvedProjects {
+  const confirmedLive = options?.confirmedLive ?? false;
+  const present = new Set(repos.map((repo) => repo.name));
   const findRepo = (name?: string) =>
     name ? repos.find((repo) => repo.name === name) : undefined;
   const curatedRepoNames = new Set(
@@ -177,9 +194,12 @@ export function resolveProjects(repos: GithubRepo[]): ResolvedProjects {
       .filter((name): name is string => Boolean(name)),
   );
 
-  const projects = curatedProjects.map((project) =>
-    applyRepoOverlay(project, findRepo(project.repoName)),
-  );
+  const projects = curatedProjects
+    .filter(
+      (project) =>
+        !project.repoName || !confirmedLive || present.has(project.repoName),
+    )
+    .map((project) => applyRepoOverlay(project, findRepo(project.repoName)));
 
   const autoShowcase = repos
     .filter(

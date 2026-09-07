@@ -170,7 +170,11 @@ function SyncStatus({ live }: { live: LiveRepos }) {
 
 export function Projects() {
   const live = useLiveRepos();
-  const data = useMemo(() => resolveProjects(live.repos), [live.repos]);
+  const data = useMemo(
+    () =>
+      resolveProjects(live.repos, { confirmedLive: live.source === "live" }),
+    [live],
+  );
   const featured = useMemo(
     () => [...data.projects, ...data.autoShowcase],
     [data],
