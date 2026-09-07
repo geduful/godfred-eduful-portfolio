@@ -120,3 +120,135 @@ export async function fetchLiveProfile(): Promise<LiveProfile | null> {
     return cached;
   }
 }
+
+export type LiveReposResult = {
+  repos: GithubRepo[];
+  /** "live" = confirmed fresh from the API (200 or 304), "cache" = stale/offline fallback. */
+  source: "live" | "cache";
+  /** Epoch ms when this data was last confirmed fresh. */
+  updatedAt: number;
+};
+
+const LIVE_REPOS_CACHE_KEY = "github-live-repos";
+const LIVE_REPOS_TTL_MS = 30 * 60 * 1000;
+
+type LiveReposCache = {
+  fetchedAt: number;
+  etag: string | null;
+  repos: GithubRepo[];
+};
+
+function readLiveReposCache(): LiveReposCache | null {
+  try {
+    const item = window.localStorage.getItem(LIVE_REPOS_CACHE_KEY);
+    if (!item) return null;
+    const parsed = JSON.parse(item) as Partial<LiveReposCache>;
+    if (
+      typeof parsed.fetchedAt !== "number" ||
+      !Array.isArray(parsed.repos) ||
+      !parsed.repos.every((repo) => typeof repo?.name === "string")
+    ) {
+      return null;
+    }
+    return {
+      fetchedAt: parsed.fetchedAt,
+      etag: typeof parsed.etag === "string" ? parsed.etag : null,
+      repos: parsed.repos as GithubRepo[],
+    };
+  } catch {
+    return null;
+  }
+}
+
+function writeLiveReposCache(cache: LiveReposCache) {
+  try {
+    window.localStorage.setItem(LIVE_REPOS_CACHE_KEY, JSON.stringify(cache));
+  } catch {
+    // storage unavailable — skip caching, fetch again next visit
+  }
+}
+
+function toGithubRepo(repo: {
+  name?: string;
+  description?: string | null;
+  html_url?: string | null;
+  homepage?: string | null;
+  language?: string | null;
+  topics?: string[];
+  pushed_at?: string | null;
+}): GithubRepo | null {
+  if (!repo.name) return null;
+  return {
+    name: repo.name,
+    description: repo.description ?? null,
+    htmlUrl: repo.html_url ?? null,
+    homepage: repo.homepage ?? null,
+    language: repo.language ?? null,
+    topics: repo.topics ?? [],
+    pushedAt: repo.pushed_at ?? null,
+  };
+}
+
+/**
+ * Fetches the live repository list in the browser so newly pushed projects
+ * appear on the portfolio with no rebuild or deploy. Uses ETag conditional
+ * requests — a `304 Not Modified` response confirms freshness without
+ * counting against the anonymous rate limit (60 requests/hour/IP).
+ * Results are cached in localStorage for 30 minutes; when the API is
+ * unreachable the last cached list is returned instead.
+ */
+export async function fetchLiveRepos(): Promise<LiveReposResult | null> {
+  const cached = readLiveReposCache();
+  if (cached && Date.now() - cached.fetchedAt < LIVE_REPOS_TTL_MS) {
+    return { repos: cached.repos, source: "cache", updatedAt: cached.fetchedAt };
+  }
+
+  const login = data.profile?.login ?? "geduful";
+  try {
+    const res = await fetch(
+      `https://api.github.com/users/${login}/repos?per_page=100&sort=pushed`,
+      {
+        headers: {
+          Accept: "application/vnd.github+json",
+          ...(cached?.etag ? { "If-None-Match": cached.etag } : {}),
+        },
+        cache: "no-store",
+      },
+    );
+    if (res.status === 304 && cached) {
+      const touched = { ...cached, fetchedAt: Date.now() };
+      writeLiveReposCache(touched);
+      return { repos: cached.repos, source: "live", updatedAt: touched.fetchedAt };
+    }
+    if (!res.ok) {
+      return cached
+        ? { repos: cached.repos, source: "cache", updatedAt: cached.fetchedAt }
+        : null;
+    }
+    const json = (await res.json()) as Array<{
+      name?: string;
+      fork?: boolean;
+      description?: string | null;
+      html_url?: string | null;
+      homepage?: string | null;
+      language?: string | null;
+      topics?: string[];
+      pushed_at?: string | null;
+    }>;
+    const repos = json
+      .filter((repo) => !repo.fork)
+      .map(toGithubRepo)
+      .filter((repo): repo is GithubRepo => repo !== null);
+    const fresh: LiveReposCache = {
+      fetchedAt: Date.now(),
+      etag: res.headers.get("etag"),
+      repos,
+    };
+    writeLiveReposCache(fresh);
+    return { repos, source: "live", updatedAt: fresh.fetchedAt };
+  } catch {
+    return cached
+      ? { repos: cached.repos, source: "cache", updatedAt: cached.fetchedAt }
+      : null;
+  }
+}

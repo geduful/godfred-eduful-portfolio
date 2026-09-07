@@ -1,8 +1,11 @@
-import { github } from "../lib/github";
+import { github, type GithubRepo } from "../lib/github";
+import { isFreshRepo } from "../lib/repoMeta";
 
 export type Project = {
   name: string;
   category: string;
+  /** Small pill rendered next to the category (e.g. "New", "Auto-synced"). */
+  badge?: string;
   description: string;
   role: string;
   tech: string[];
@@ -98,8 +101,21 @@ const curatedProjects: Project[] = [
   },
 ];
 
-export const projects: Project[] = curatedProjects.map((project) => {
-  const repo = project.repoName ? github.findRepo(project.repoName) : undefined;
+/**
+ * Topic that promotes a GitHub repo to a full project card automatically.
+ * Tag any repo with the `portfolio` topic on GitHub and it appears in the
+ * projects grid on the next visit — no code changes, no deploys.
+ */
+export const SHOWCASE_TOPIC = "portfolio";
+
+/** The profile README repo — never listed as a project. */
+const profileRepoName = github.profile.login ?? "geduful";
+
+function nonEmpty(value?: string | null): string | undefined {
+  return value || undefined;
+}
+
+function applyRepoOverlay(project: Project, repo?: GithubRepo): Project {
   if (!repo) return project;
 
   const tech = repo.language && !project.tech.includes(repo.language)
@@ -108,18 +124,93 @@ export const projects: Project[] = curatedProjects.map((project) => {
 
   return {
     ...project,
-    description: repo.description ?? project.description,
-    liveUrl: project.liveUrl ?? repo.homepage ?? undefined,
-    repoUrl: repo.htmlUrl ?? project.repoUrl,
+    description: repo.description || project.description,
+    liveUrl: project.liveUrl || repo.homepage || undefined,
+    repoUrl: repo.htmlUrl || project.repoUrl,
     tech,
   };
-});
+}
+
+/**
+ * Builds a full project card from a synced GitHub repo — used for repos
+ * tagged with the showcase topic that have no hand-written entry.
+ */
+function toAutoProject(repo: GithubRepo): Project {
+  return {
+    name: repo.name,
+    category: "Project · Auto-synced",
+    badge: isFreshRepo(repo.pushedAt) ? "New" : "Auto-synced",
+    description:
+      repo.description ||
+      "A project by Godfred Eduful — synced automatically from GitHub.",
+    role: "Developer",
+    tech: repo.language ? [repo.language] : [],
+    liveUrl: nonEmpty(repo.homepage),
+    repoUrl: nonEmpty(repo.htmlUrl),
+  };
+}
+
+function sortByPushedAtDesc(a: GithubRepo, b: GithubRepo): number {
+  return (b.pushedAt ?? "").localeCompare(a.pushedAt ?? "");
+}
+
+export type ResolvedProjects = {
+  /** Hand-curated entries, overlaid with live repo data where linked. */
+  projects: Project[];
+  /** Topic-tagged repos promoted to full cards, newest first. */
+  autoShowcase: Project[];
+  /** Remaining public repos for the "More from GitHub" list. */
+  otherRepos: GithubRepo[];
+};
+
+/**
+ * Resolves the whole projects section from any repo list — the build-time
+ * snapshot for first paint, the live API list once it arrives. Curated
+ * entries keep their order and case studies; new repos flow in on their own.
+ */
+export function resolveProjects(repos: GithubRepo[]): ResolvedProjects {
+  const findRepo = (name?: string) =>
+    name ? repos.find((repo) => repo.name === name) : undefined;
+  const curatedRepoNames = new Set(
+    curatedProjects
+      .map((project) => project.repoName)
+      .filter((name): name is string => Boolean(name)),
+  );
+
+  const projects = curatedProjects.map((project) =>
+    applyRepoOverlay(project, findRepo(project.repoName)),
+  );
+
+  const autoShowcase = repos
+    .filter(
+      (repo) =>
+        repo.name !== profileRepoName &&
+        !curatedRepoNames.has(repo.name) &&
+        repo.topics?.includes(SHOWCASE_TOPIC),
+    )
+    .sort(sortByPushedAtDesc)
+    .map(toAutoProject);
+
+  const autoNames = new Set(autoShowcase.map((project) => project.name));
+
+  const otherRepos = repos
+    .filter(
+      (repo) =>
+        repo.name !== profileRepoName &&
+        !curatedRepoNames.has(repo.name) &&
+        !autoNames.has(repo.name),
+    )
+    .sort(sortByPushedAtDesc);
+
+  return { projects, autoShowcase, otherRepos };
+}
+
+const snapshot = resolveProjects(github.repos);
+
+export const projects: Project[] = snapshot.projects;
+
+/** Topic-tagged repos promoted to full cards (snapshot version, first paint). */
+export const autoShowcase: Project[] = snapshot.autoShowcase;
 
 /** Public repos not featured above — listed at the bottom of the Projects section. */
-export const otherRepos = github.repos
-  .filter(
-    (repo) =>
-      repo.name !== "geduful" &&
-      !curatedProjects.some((project) => project.repoName === repo.name),
-  )
-  .sort((a, b) => (b.pushedAt ?? "").localeCompare(a.pushedAt ?? ""));
+export const otherRepos: GithubRepo[] = snapshot.otherRepos;

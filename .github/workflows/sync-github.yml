@@ -1,0 +1,50 @@
+name: Sync GitHub data
+
+# Keeps the portfolio's GitHub snapshot fresh with zero manual work:
+# every day the workflow re-runs `npm run sync` and commits
+# src/data/generated/github.json when anything changed. The push to main
+# triggers a Vercel redeploy, so SEO/first-paint data stays current even
+# for visitors whose browsers never run the live client-side sync.
+# (Browser visitors ALSO get live data instantly via the client-side
+# fetch in src/lib/github.ts — this workflow is the static backup.)
+
+on:
+  schedule:
+    - cron: "0 5 * * *" # daily at 05:00 UTC
+  workflow_dispatch: # allow manual runs from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync GitHub snapshot
+        run: npm run sync
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit updated snapshot
+        run: |
+          if git diff --quiet -- src/data/generated/github.json; then
+            echo "GitHub snapshot is already up to date."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add src/data/generated/github.json
+            git commit -m "Sync GitHub snapshot"
+            git push
+          fi

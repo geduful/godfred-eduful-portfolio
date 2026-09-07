@@ -28,7 +28,8 @@ A fast, accessible, SEO-ready single-page application that presents his work, sk
 - **Services** — a grid of offered services (full-stack development, frontend, business websites, web applications, UI/UX & graphic design, AI & automation).
 - **Contact form** — validates input, rejects bots via a hidden honeypot, and sends messages through a Vercel serverless function to Resend; direct email and social links are also provided.
 - **Dark/light themes** — theme toggle persisted in `localStorage`, honoring `prefers-color-scheme` on first visit with a pre-paint script to avoid flash.
-- **Live GitHub sync** — a build-time snapshot (`npm run sync`) plus a client-side live profile fetch (15-minute cache) so the portrait and availability status stay current without redeploys.
+- **Live GitHub sync** — a build-time snapshot (`npm run sync`) plus client-side live fetches (profile on a 15-minute cache, repositories on a 30-minute cache with ETag conditional requests, so `304` responses don't consume rate limit) so the portrait, availability status, and project lists stay current without redeploys.
+- **Automatic project publishing** — push any public repo to GitHub and it appears in "More from GitHub" on the next visit; tag a repo with the `portfolio` topic and it becomes a full project card (with a "New" badge when freshly pushed). A daily GitHub Action (`.github/workflows/sync-github.yml`) refreshes the committed snapshot so SEO and first-paint data stay current too.
 - **SEO & structured data** — canonical URL, Open Graph and Twitter cards, JSON-LD `Person`/`WebSite`/`ProfilePage` graph, `robots.txt`, `sitemap.xml`.
 - **Accessibility** — skip link, semantic landmarks, labeled form fields, visible focus states, `prefers-reduced-motion` support.
 - **Downloadable CV** — a resume PDF linked from the Hero and Contact sections.
@@ -57,7 +58,7 @@ Requirements: Node.js >= 20.19 (per `package.json` engines).
 
 A static single-page application built with Vite and React, with exactly one serverless function for the contact form.
 
-- **Content lives in `src/data/`.** Curated copy (name, taglines, projects, skills, services) is written by hand. A generated snapshot (`src/data/generated/github.json`) overlays live GitHub data — profile fields, repository links, and language statistics — and a short-lived client-side fetch keeps the portrait and availability status fresh.
+- **Content lives in `src/data/`.** Curated copy (name, taglines, projects, skills, services) is written by hand. A generated snapshot (`src/data/generated/github.json`) overlays live GitHub data — profile fields, repository links, and language statistics — and short-lived client-side fetches keep the portrait, availability status, and repository lists fresh. `resolveProjects()` in `src/data/projects.ts` merges any repo list (snapshot or live API) into curated cards, auto-showcase cards, and the "More from GitHub" feed, so newly pushed repos appear with no code changes.
 - **Theming is token-driven.** All colors and fonts are defined once in Tailwind's `@theme` block as CSS custom properties, so the dark/light toggle swaps variables at runtime without touching components.
 - **SEO head is fully static** in `index.html`: metadata, canonical, Open Graph, Twitter cards, and a JSON-LD `@graph` (Person, WebSite, ProfilePage).
 - **The contact flow is client → serverless → Resend.** The browser posts to `/api/contact`; the function validates, strips origin/spam, and forwards the email. The API key never reaches the browser.
@@ -68,6 +69,9 @@ A static single-page application built with Vite and React, with exactly one ser
 
 ```
 godfred-eduful-portfolio/
+├── .github/
+│   └── workflows/
+│       └── sync-github.yml        # daily scheduled GitHub snapshot refresh (auto-commit + push)
 ├── api/
 │   └── contact.mjs              # Vercel serverless function — contact form → Resend
 ├── public/                      # served as-is at the site root
@@ -91,9 +95,10 @@ godfred-eduful-portfolio/
 │   │   ├── services.ts          # services grid
 │   │   └── generated/
 │   │       └── github.json      # auto-generated GitHub snapshot (committed, refreshed by sync)
-│   ├── hooks/                   # useTheme, useReveal, useActiveSection, useLiveProfile
+│   ├── hooks/                   # useTheme, useReveal, useActiveSection, useLiveProfile, useLiveRepos
 │   ├── lib/
-│   │   ├── github.ts            # typed access to the GitHub snapshot + live profile fetch
+│   │   ├── github.ts            # typed access to the GitHub snapshot + live profile/repos fetches
+│   │   ├── repoMeta.ts          # language colors, "updated ago" labels, "New" freshness window
 │   │   └── cn.ts                # className helper
 │   ├── App.tsx                  # page composition (section order)
 │   ├── main.tsx                 # React entry

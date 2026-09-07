@@ -1,6 +1,14 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ChevronDown, ExternalLink } from "lucide-react";
-import { otherRepos, projects, type Project } from "../../data/projects";
+import {
+  autoShowcase,
+  otherRepos,
+  projects,
+  resolveProjects,
+  type Project,
+} from "../../data/projects";
+import { useLiveRepos, type LiveRepos } from "../../hooks/useLiveRepos";
+import { formatUpdatedAgo, languageColor } from "../../lib/repoMeta";
 import { GithubIcon } from "../ui/icons";
 import { Reveal } from "../ui/Reveal";
 import { SectionHeading } from "../ui/SectionHeading";
@@ -67,8 +75,15 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           >
             {project.name.charAt(0)}
           </span>
-          <span className="rounded-full border border-base-700 px-3 py-1 text-xs font-medium uppercase tracking-wider text-ink-400">
-            {project.category}
+          <span className="flex flex-wrap justify-end gap-2">
+            <span className="rounded-full border border-base-700 px-3 py-1 text-xs font-medium uppercase tracking-wider text-ink-400">
+              {project.category}
+            </span>
+            {project.badge ? (
+              <span className="rounded-full border border-accent-400/25 bg-accent-soft px-3 py-1 text-xs font-medium uppercase tracking-wider text-accent-300">
+                {project.badge}
+              </span>
+            ) : null}
           </span>
         </div>
 
@@ -126,55 +141,121 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   );
 }
 
+function SyncStatus({ live }: { live: LiveRepos }) {
+  const ago = formatUpdatedAgo(live.updatedAt);
+  const label =
+    live.source === "live"
+      ? ago
+        ? `Live from GitHub · updated ${ago}`
+        : "Live from GitHub"
+      : ago
+        ? `Synced from GitHub · ${ago}`
+        : "Synced from GitHub";
+
+  return (
+    <p className="mt-6 flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-ink-500">
+      <span
+        aria-hidden="true"
+        className={cn(
+          "size-1.5 rounded-full",
+          live.source === "live"
+            ? "animate-pulse bg-emerald-400"
+            : "bg-amber-400/70",
+        )}
+      />
+      {label}
+    </p>
+  );
+}
+
 export function Projects() {
+  const live = useLiveRepos();
+  const data = useMemo(() => resolveProjects(live.repos), [live.repos]);
+  const featured = useMemo(
+    () => [...data.projects, ...data.autoShowcase],
+    [data],
+  );
+  const feed = data.otherRepos.length > 0 ? data.otherRepos : otherRepos;
+  const grid = featured.length > 0 ? featured : [...projects, ...autoShowcase];
+
   return (
     <section id="projects" className="border-t border-base-800/60 py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="03 — Projects"
           title="Selected work"
-          description="A snapshot of platforms and websites I've designed, built, and contributed to. External links open in a new tab."
+          description="A snapshot of platforms and websites I've designed, built, and contributed to. New GitHub projects appear here on their own — external links open in a new tab."
         />
+        <SyncStatus live={live} />
 
-        <div className="mt-14 grid gap-6 md:grid-cols-2">
-          {projects.map((project, index) => (
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
+          {grid.map((project, index) => (
             <ProjectCard key={project.name} project={project} index={index} />
           ))}
         </div>
 
-        {otherRepos.length > 0 ? (
+        {feed.length > 0 ? (
           <Reveal delay={200}>
             <div className="mt-10 rounded-2xl border border-base-800 bg-base-900/60 p-6 sm:p-8">
               <h3 className="font-display text-lg font-semibold text-ink-100">
                 More from GitHub
               </h3>
               <ul className="mt-4 divide-y divide-base-800">
-                {otherRepos.map((repo) => (
-                  <li key={repo.name}>
-                    <a
-                      href={repo.htmlUrl ?? "#"}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group flex items-center gap-3 py-3.5"
+                {feed.map((repo) => {
+                  const ago = formatUpdatedAgo(repo.pushedAt);
+                  return (
+                    <li
+                      key={repo.name}
+                      className="flex items-center gap-3 py-3.5"
                     >
                       <span
                         aria-hidden="true"
-                        className="size-2 shrink-0 rounded-full bg-accent-400/60"
+                        className="size-2 shrink-0 rounded-full"
+                        style={{
+                          backgroundColor: languageColor(repo.language),
+                        }}
                       />
-                      <span className="font-mono text-sm text-ink-200 transition-colors group-hover:text-accent-300">
-                        {repo.name}
-                      </span>
-                      {repo.language ? (
-                        <span className="hidden rounded-full border border-base-700 px-2 py-0.5 text-xs text-ink-500 sm:inline">
-                          {repo.language}
+                      <a
+                        href={repo.htmlUrl ?? "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex min-w-0 flex-1 items-center gap-3"
+                      >
+                        <span className="shrink-0 font-mono text-sm text-ink-200 transition-colors group-hover:text-accent-300">
+                          {repo.name}
+                        </span>
+                        {repo.language ? (
+                          <span className="hidden shrink-0 rounded-full border border-base-700 px-2 py-0.5 text-xs text-ink-500 sm:inline">
+                            {repo.language}
+                          </span>
+                        ) : null}
+                        <span className="hidden truncate pl-1 text-sm text-ink-500 md:block">
+                          {repo.description ?? "Public repository"}
+                        </span>
+                      </a>
+                      {ago ? (
+                        <span className="hidden shrink-0 text-xs text-ink-500 sm:inline">
+                          {ago}
                         </span>
                       ) : null}
-                      <span className="ml-auto hidden truncate pl-4 text-sm text-ink-500 md:block">
-                        {repo.description ?? "Public repository"}
-                      </span>
-                    </a>
-                  </li>
-                ))}
+                      {repo.homepage ? (
+                        <a
+                          href={repo.homepage}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${repo.name} live site`}
+                          title={`${repo.name} live site`}
+                          className="grid size-8 shrink-0 place-items-center rounded-lg border border-base-700 text-ink-400 transition-colors hover:border-accent-400/40 hover:text-accent-300"
+                        >
+                          <ExternalLink
+                            className="size-4"
+                            aria-hidden="true"
+                          />
+                        </a>
+                      ) : null}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </Reveal>
