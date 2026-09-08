@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-02T19:28:53.250Z",
+  "fetchedAt": "2026-09-08T09:23:55.244Z",
   "profile": {
     "name": "Godfred Eduful",
     "login": "geduful",
@@ -12,13 +12,40 @@
   },
   "repos": [
     {
-      "name": "godfred-eduful-portfolio",
+      "name": "TheFarmYard",
       "description": null,
-      "htmlUrl": "https://github.com/geduful/godfred-eduful-portfolio",
-      "homepage": "https://godfred-eduful-portfolio.vercel.app",
+      "htmlUrl": "https://github.com/geduful/TheFarmYard",
+      "homepage": "https://thefarmyard.vercel.app",
       "language": "TypeScript",
       "topics": [],
-      "pushedAt": "2026-08-02T18:53:51Z"
+      "pushedAt": "2026-09-08T08:55:46Z"
+    },
+    {
+      "name": "godfred-eduful-portfolio",
+      "description": "Professional portfolio of Godfred Eduful — Full-Stack Developer, Computer Science Student and Graphic Designer in Ghana. Built with React, TypeScript, Tailwind CSS v4 and Vite.",
+      "htmlUrl": "https://github.com/geduful/godfred-eduful-portfolio",
+      "homepage": "https://godfrededuful.vercel.app/",
+      "language": "TypeScript",
+      "topics": [],
+      "pushedAt": "2026-09-07T17:50:14Z"
+    },
+    {
+      "name": "Digital_Legacy",
+      "description": null,
+      "htmlUrl": "https://github.com/geduful/Digital_Legacy",
+      "homepage": "https://princealbertkoomson.vercel.app",
+      "language": "JavaScript",
+      "topics": [],
+      "pushedAt": "2026-08-29T21:34:55Z"
+    },
+    {
+      "name": "Nuellas_Klothing",
+      "description": "Official website for Nuella's Klothing — premium bespoke tailoring and ready-to-wear fashion in Koforidua, Ghana. Built with HTML, Tailwind CSS and JavaScript.",
+      "htmlUrl": "https://github.com/geduful/Nuellas_Klothing",
+      "homepage": "https://nuellas-klothing.vercel.app",
+      "language": "HTML",
+      "topics": [],
+      "pushedAt": "2026-08-12T03:14:46Z"
     },
     {
       "name": "HTML",
@@ -37,45 +64,27 @@
       "language": null,
       "topics": [],
       "pushedAt": "2026-08-01T02:57:56Z"
-    },
-    {
-      "name": "TheFarmYard",
-      "description": null,
-      "htmlUrl": "https://github.com/geduful/TheFarmYard",
-      "homepage": null,
-      "language": "TypeScript",
-      "topics": [],
-      "pushedAt": "2026-07-07T20:52:24Z"
-    },
-    {
-      "name": "Nuellas_Klothing",
-      "description": null,
-      "htmlUrl": "https://github.com/geduful/Nuellas_Klothing",
-      "homepage": "https://nuellas-klothing.vercel.app",
-      "language": "HTML",
-      "topics": [],
-      "pushedAt": "2026-07-31T02:31:31Z"
     }
   ],
   "repoLanguages": [
     {
-      "language": "HTML",
-      "percent": 51
+      "language": "TypeScript",
+      "percent": 48
     },
     {
-      "language": "TypeScript",
-      "percent": 42
+      "language": "HTML",
+      "percent": 40
     },
     {
       "language": "JavaScript",
-      "percent": 4
-    },
-    {
-      "language": "CSS",
-      "percent": 1
+      "percent": 9
     },
     {
       "language": "PLpgSQL",
+      "percent": 2
+    },
+    {
+      "language": "CSS",
       "percent": 1
     }
   ]
