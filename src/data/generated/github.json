@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-15T09:47:59.984Z",
+  "fetchedAt": "2026-09-16T09:42:41.235Z",
   "profile": {
     "name": "Godfred Eduful",
     "login": "geduful",
@@ -12,6 +12,15 @@
   },
   "repos": [
     {
+      "name": "godfred-eduful-portfolio",
+      "description": "Professional portfolio of Godfred Eduful — Full-Stack Developer, Computer Science Student and Graphic Designer in Ghana. Built with React, TypeScript, Tailwind CSS v4 and Vite.",
+      "htmlUrl": "https://github.com/geduful/godfred-eduful-portfolio",
+      "homepage": "https://godfrededuful.vercel.app/",
+      "language": "TypeScript",
+      "topics": [],
+      "pushedAt": "2026-09-15T09:48:01Z"
+    },
+    {
       "name": "TheFarmYard",
       "description": null,
       "htmlUrl": "https://github.com/geduful/TheFarmYard",
@@ -19,15 +28,6 @@
       "language": "TypeScript",
       "topics": [],
       "pushedAt": "2026-09-14T13:07:45Z"
-    },
-    {
-      "name": "godfred-eduful-portfolio",
-      "description": "Professional portfolio of Godfred Eduful — Full-Stack Developer, Computer Science Student and Graphic Designer in Ghana. Built with React, TypeScript, Tailwind CSS v4 and Vite.",
-      "htmlUrl": "https://github.com/geduful/godfred-eduful-portfolio",
-      "homepage": "https://godfrededuful.vercel.app/",
-      "language": "TypeScript",
-      "topics": [],
-      "pushedAt": "2026-09-14T10:21:15Z"
     },
     {
       "name": "Digital_Legacy",
