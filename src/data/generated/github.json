@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-30T10:55:35.685Z",
+  "fetchedAt": "2026-10-01T11:24:32.198Z",
   "profile": {
     "name": "Godfred Eduful",
     "login": "geduful",
@@ -18,16 +18,7 @@
       "homepage": "https://godfrededuful.vercel.app/",
       "language": "TypeScript",
       "topics": [],
-      "pushedAt": "2026-09-29T11:09:52Z"
-    },
-    {
-      "name": "TheFarmYard",
-      "description": null,
-      "htmlUrl": "https://github.com/geduful/TheFarmYard",
-      "homepage": "https://thefarmyard.vercel.app",
-      "language": "TypeScript",
-      "topics": [],
-      "pushedAt": "2026-09-14T13:07:45Z"
+      "pushedAt": "2026-09-30T10:55:36Z"
     },
     {
       "name": "Digital_Legacy",
@@ -68,24 +59,20 @@
   ],
   "repoLanguages": [
     {
-      "language": "TypeScript",
-      "percent": 68
-    },
-    {
       "language": "HTML",
-      "percent": 19
+      "percent": 67
     },
     {
-      "language": "PLpgSQL",
-      "percent": 8
+      "language": "TypeScript",
+      "percent": 16
     },
     {
       "language": "JavaScript",
-      "percent": 4
+      "percent": 16
     },
     {
       "language": "CSS",
-      "percent": 1
+      "percent": 2
     }
   ]
 }
