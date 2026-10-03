@@ -4,10 +4,10 @@ import { SectionHeading } from "../ui/SectionHeading";
 const entries = [
   {
     title: "Acadex",
-    role: "Developer Contributor",
+    role: "Contributor",
     badge: "Contribution",
     description:
-      "Contributed to the development of the Acadex platform and its web experience alongside Rosemary Boahemaa Dwamena — an attendance management platform built to simplify how attendance is recorded and monitored for a university community.",
+      "Contributor to Acadex, a student attendance management platform created and developed by Rosemary Boahemaa Dwamena — built to simplify how attendance is recorded and monitored for a university community.",
   },
   {
     title: "TheFarmYard",
