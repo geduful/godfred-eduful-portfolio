@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-11T11:15:26.243Z",
+  "fetchedAt": "2026-10-12T12:47:46.018Z",
   "profile": {
     "name": "Godfred Eduful",
     "login": "geduful",
@@ -18,7 +18,7 @@
       "homepage": "https://yaaqworld.vercel.app",
       "language": "TypeScript",
       "topics": [],
-      "pushedAt": "2026-10-10T23:24:06Z"
+      "pushedAt": "2026-10-12T01:48:06Z"
     },
     {
       "name": "godfred-eduful-portfolio",
@@ -27,7 +27,7 @@
       "homepage": "https://godfrededuful.vercel.app/",
       "language": "TypeScript",
       "topics": [],
-      "pushedAt": "2026-10-10T10:58:09Z"
+      "pushedAt": "2026-10-11T11:15:27Z"
     },
     {
       "name": "Digital_Legacy",
@@ -69,19 +69,19 @@
   "repoLanguages": [
     {
       "language": "TypeScript",
-      "percent": 50
+      "percent": 52
     },
     {
       "language": "HTML",
-      "percent": 31
+      "percent": 30
     },
     {
       "language": "PLpgSQL",
-      "percent": 9
+      "percent": 10
     },
     {
       "language": "JavaScript",
-      "percent": 8
+      "percent": 7
     },
     {
       "language": "CSS",
