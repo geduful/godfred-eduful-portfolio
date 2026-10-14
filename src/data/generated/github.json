@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-13T12:29:02.852Z",
+  "fetchedAt": "2026-10-14T09:56:41.023Z",
   "profile": {
     "name": "Godfred Eduful",
     "login": "geduful",
@@ -12,22 +12,13 @@
   },
   "repos": [
     {
-      "name": "YaaqWorld",
-      "description": null,
-      "htmlUrl": "https://github.com/geduful/YaaqWorld",
-      "homepage": "https://yaaqworld.vercel.app",
-      "language": "TypeScript",
-      "topics": [],
-      "pushedAt": "2026-10-13T03:15:12Z"
-    },
-    {
       "name": "godfred-eduful-portfolio",
       "description": "Professional portfolio of Godfred Eduful — Full-Stack Developer, Computer Science Student and Graphic Designer in Ghana. Built with React, TypeScript, Tailwind CSS v4 and Vite.",
       "htmlUrl": "https://github.com/geduful/godfred-eduful-portfolio",
       "homepage": "https://godfrededuful.vercel.app/",
       "language": "TypeScript",
       "topics": [],
-      "pushedAt": "2026-10-12T12:47:47Z"
+      "pushedAt": "2026-10-13T12:29:03Z"
     },
     {
       "name": "Digital_Legacy",
@@ -68,24 +59,20 @@
   ],
   "repoLanguages": [
     {
-      "language": "TypeScript",
-      "percent": 52
-    },
-    {
       "language": "HTML",
-      "percent": 29
+      "percent": 67
     },
     {
-      "language": "PLpgSQL",
-      "percent": 11
+      "language": "TypeScript",
+      "percent": 16
     },
     {
       "language": "JavaScript",
-      "percent": 7
+      "percent": 16
     },
     {
       "language": "CSS",
-      "percent": 1
+      "percent": 2
     }
   ]
 }
