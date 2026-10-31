@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-30T11:11:55.126Z",
+  "fetchedAt": "2026-10-31T10:45:29.976Z",
   "profile": {
     "name": "Godfred Eduful",
     "login": "geduful",
@@ -12,13 +12,22 @@
   },
   "repos": [
     {
+      "name": "TheFarmYard-Mobile",
+      "description": null,
+      "htmlUrl": "https://github.com/geduful/TheFarmYard-Mobile",
+      "homepage": null,
+      "language": "TypeScript",
+      "topics": [],
+      "pushedAt": "2026-10-30T15:41:53Z"
+    },
+    {
       "name": "godfred-eduful-portfolio",
       "description": "Professional portfolio of Godfred Eduful — Full-Stack Developer, Computer Science Student and Graphic Designer in Ghana. Built with React, TypeScript, Tailwind CSS v4 and Vite.",
       "htmlUrl": "https://github.com/geduful/godfred-eduful-portfolio",
       "homepage": "https://godfrededuful.vercel.app/",
       "language": "TypeScript",
       "topics": [],
-      "pushedAt": "2026-10-29T11:19:39Z"
+      "pushedAt": "2026-10-30T11:11:56Z"
     },
     {
       "name": "TheFarmYard",
@@ -69,15 +78,15 @@
   "repoLanguages": [
     {
       "language": "TypeScript",
-      "percent": 68
+      "percent": 73
     },
     {
       "language": "HTML",
-      "percent": 18
+      "percent": 16
     },
     {
       "language": "PLpgSQL",
-      "percent": 9
+      "percent": 7
     },
     {
       "language": "JavaScript",
